@@ -6,7 +6,6 @@ import com.jdc.student.model.Student;
 import com.jdc.student.model.StudentModel;
 import com.jdc.student.model.impl.StudentModelImpl;
 
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -34,26 +33,32 @@ public class StudentServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var servletPath = req.getServletPath();
 		
+		var idString = req.getParameter("id");
+		int id = (null != idString && !idString.isEmpty()) ? Integer.parseInt(idString) : 0;
+		
 		var jsp = switch (servletPath) {
-		case "/student-edit": {
+		case "/student-edit":
+		case "/student-details":
+		{
 			// Add New or Edit Operation
+			if(id > 0) {
+				req.setAttribute("student", model.findById(id));
+			}
 			
-			yield "/student-edit.jsp";
-		}
-		case "/student-details": {
-			// Show Details Operation
-			
-			yield "/student-details.jsp";
-		}
-		case "/student-delete": {
-			// Delete Operation
-			yield "/index.jsp";
+			yield "%s.jsp".formatted(servletPath);
 		}
 		default:
+			
+			// Delete Operation
+			if(id > 0 && "/student-delete".equals(servletPath)) {
+				model.delete(id);
+			}
+			
 			// Search
 			var searchName = req.getParameter("searchName");
 			var list = model.search(searchName);
-			req.setAttribute("list", list);
+			req.setAttribute("students", list);
+			
 			yield "/index.jsp";
 		};
 		

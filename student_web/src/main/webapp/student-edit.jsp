@@ -25,19 +25,19 @@
 			<!-- Name -->
 			<div class="form-group mb-3">
 				<label class="form-label">Student Name</label>
-				<input type="text" name="name" placeholder="Enter Student Name" class="form-control" />
+				<input type="text" value="${ student.name }" name="name" placeholder="Enter Student Name" class="form-control" />
 			</div>
 			
 			<!-- Phone -->
 			<div class="form-group mb-3">
 				<label class="form-label">Phone</label>
-				<input type="tel" name="phone" placeholder="Enter Phone Number" class="form-control" />
+				<input type="tel" value="${ student.phone }" name="phone" placeholder="Enter Phone Number" class="form-control" />
 			</div>
 			
 			<!-- Email -->
 			<div class="form-group mb-3">
 				<label class="form-label">Email</label>
-				<input type="email" name="email" placeholder="Enter Email" class="form-control" />
+				<input type="email" value="${ student.email }" name="email" placeholder="Enter Email" class="form-control" />
 			</div>
 			
 			<!-- Save Button -->
