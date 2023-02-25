@@ -7,4 +7,7 @@ public record State(
 		String region
 		) {
 
+	public State(String name, String capital, String region) {
+		this(0, name, capital, region);
+	}
 }

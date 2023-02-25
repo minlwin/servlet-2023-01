@@ -26,7 +26,7 @@ public class StateRepoTest {
 	void test_create(String name, String region, String capital) {
 		
 		// Prepare Input Data
-		State state = new State(0, name, capital, region);
+		State state = new State(name, capital, region);
 		
 		// Execute Target Method
 		var result = repo.create(state);
