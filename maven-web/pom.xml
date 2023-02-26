@@ -39,11 +39,11 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.jdc.servlet</groupId>
-			<artifactId>student_file</artifactId>
+			<groupId>com.jdc.basic</groupId>
+			<artifactId>lesson2</artifactId>
 			<version>1.0</version>
 		</dependency>
-		
+				
 	</dependencies>
 	<build>
 		<plugins>
