@@ -4,8 +4,8 @@ public record CategoryListDto(
 		int id,
 		String name,
 		String burmese,
-		int divisionCount,
-		int townshipCount
+		long divisionCount,
+		long townshipCount
 		) {
 
 }

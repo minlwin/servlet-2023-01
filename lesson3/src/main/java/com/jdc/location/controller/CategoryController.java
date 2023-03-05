@@ -2,9 +2,12 @@ package com.jdc.location.controller;
 
 import java.io.IOException;
 
+import javax.sql.DataSource;
+
 import com.jdc.location.model.CategoryModel;
 import com.jdc.location.model.form.CategoryFrom;
 
+import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,10 +23,13 @@ public class CategoryController extends HttpServlet{
 	
 	private CategoryModel model;
 	
+	@Resource(name = "jdbc/lesson3DB")
+	private DataSource dataSource;
+	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		model = new CategoryModel();
+		model = new CategoryModel(dataSource);
 	}
 	
 	@Override
