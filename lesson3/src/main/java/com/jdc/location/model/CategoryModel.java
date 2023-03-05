@@ -8,6 +8,7 @@ import com.jdc.location.model.form.CategoryFrom;
 public class CategoryModel {
 	
 	public int save(CategoryFrom form) {
+		System.out.println(form);
 		return 0;
 	}
 	

@@ -19,7 +19,8 @@
 		
 		<div class="mb-4 d-flex justify-content-between">
 			<h3>Category Management</h3>
-			<a href="#" class="btn btn-outline-danger"><i class="bi bi-plus-lg"></i> Add New</a>	
+			<c:url value="/category-edit" var="addNew"></c:url>
+			<a href="${ addNew }" class="btn btn-outline-danger"><i class="bi bi-plus-lg me-2"></i> Add New</a>	
 		</div>
 		
 		<div class="row row-cols-3 g-3">
@@ -29,6 +30,29 @@
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">${ item.name() }</h5>
+							<span>${ item.burmese() }</span>
+							
+							<div class="row my-4">
+								
+								<div class="col d-flex flex-column">
+									<h3>${ item.divisionCount() }</h3>
+									<span>Divisions</span>
+								</div>
+								
+								<div class="col d-flex flex-column">
+									<h3>${ item.townshipCount() }</h3>
+									<span>Townships</span>
+								</div>
+
+							</div>
+							
+							<c:url value="/category-edit" var="edit">
+								<c:param name="id" value="${ item.id() }"></c:param>
+							</c:url>
+							<a href="${ edit }" class="btn btn-outline-danger">
+								<i class="bi bi-pencil me-2"></i> Edit
+							</a>
+							
 						</div>
 					</div>
 				</div>
