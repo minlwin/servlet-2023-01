@@ -140,4 +140,23 @@ public class CategoryModel {
 		
 		return 0;
 	}
+
+	public CategoryFrom findById(int id) {
+		var sql = "select * from category where id = ?";
+		try (var conn = dataSource.getConnection(); 
+				var stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setInt(1, id);
+			
+			var rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				return new CategoryFrom(rs.getInt(1), rs.getString(2), rs.getString(3));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

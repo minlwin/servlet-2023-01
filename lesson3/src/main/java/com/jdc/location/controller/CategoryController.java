@@ -36,6 +36,14 @@ public class CategoryController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		if(req.getServletPath().equals("/category-edit")) {
+			
+			var id = req.getParameter("id");
+			
+			if(null != id && !id.isBlank()) {
+				var form = model.findById(Integer.parseInt(id));
+				req.setAttribute("form", form);
+			}
+			
 			getServletContext().getRequestDispatcher("/category/edit.jsp").forward(req, resp);
 		} else {
 			req.setAttribute("list", model.findAll());
