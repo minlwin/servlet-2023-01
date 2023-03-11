@@ -13,6 +13,10 @@
 	<jsp:include page="/includes/navbar.jsp">
 		<jsp:param value="township" name="active"/>
 	</jsp:include>
+	
+	<!-- Search Bar -->
+	
+	<!-- Result Table -->
 
 </body>
 </html>

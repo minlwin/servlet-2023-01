@@ -37,7 +37,7 @@
 				<select name="category" class="form-select">
 					<option value="">Select One</option>
 					<c:forEach items="${ categories }" var="category">
-						<option value="${ category.id() }">${ category.name() }</option>
+						<option value="${ category.id() }" ${ category.id() eq form.categoryId() ? 'selected' : '' }>${ category.name() }</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -45,7 +45,7 @@
 			<!-- Name -->
 			<div class="form-group mb-4">
 				<label class="form-label">Division Name</label>
-				<input type="text" value="${ form.name() }" required="required" name="name" class="form-control" placeholder="Enter Division Name" />
+				<input type="text" value="${ form.name() }" required="required"  name="name" class="form-control" placeholder="Enter Division Name" />
 			</div>
 					
 			<!-- Burmese -->
@@ -57,7 +57,7 @@
 			<!-- Capital -->
 			<div class="form-group mb-4">
 				<label class="form-label">Capital Name</label>
-				<input type="text" value="${ form.burmese() }" required="required" name="capital" class="form-control" placeholder="Enter Capital Name" />
+				<input type="text" value="${ form.capital() }" required="required" name="capital" class="form-control" placeholder="Enter Capital Name" />
 			</div>
 
 			<button class="btn btn-outline-danger">

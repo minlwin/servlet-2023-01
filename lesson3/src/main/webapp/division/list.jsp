@@ -8,6 +8,7 @@
 <jsp:include page="/includes/heading.jsp">
 	<jsp:param value="Divisions" name="title"/>
 </jsp:include>	
+
 </head>
 <body>
 
@@ -18,8 +19,15 @@
 	<div class="container pt-4">
 		<div class="mb-4 d-flex justify-content-between">
 			<h3>Division Management</h3>
-			<c:url value="/division-edit" var="addNew"></c:url>
-			<a href="${ addNew }" class="btn btn-outline-danger"><i class="bi bi-plus-lg me-2"></i> Add New</a>	
+			
+			<div>
+				<a href="#" id="uploadBtn" class="btn btn-outline-primary">
+					<i class="bi bi-upload"></i> Upload
+				</a>
+				
+				<c:url value="/division-edit" var="addNew"></c:url>
+				<a href="${ addNew }" class="btn btn-outline-danger"><i class="bi bi-plus-lg me-2"></i> Add New</a>	
+			</div>
 		</div>
 		
 		<c:choose>
@@ -42,26 +50,40 @@
 						<th></th>
 					</tr>
 					
-					<tr>
-						<td>1</td>
-						<td>Ayawadii</td>
-						<td>Burmese</td>
-						<td>State</td>
-						<td>Pathein</td>
-						<td>
-							<a href="#" class="btn btn-link">
-								<i class="bi bi-pencil"></i>
-							</a>
-						</td>
-					</tr>
+					<c:forEach items="${ list }" var="item">
+						<tr>
+							<td>${ item.id() }</td>
+							<td>${ item.name() }</td>
+							<td>${ item.burmse() }</td>
+							<td>${ item.categoryName() }</td>
+							<td>${ item.capital() }</td>
+							<td>
+								<c:url var="editLink" value="/division-edit">
+									<c:param name="id" value="${ item.id() }" />
+								</c:url>
+							
+								<a href="${ editLink }" class="btn-link">
+									<i class="bi bi-pencil"></i>
+								</a>
+							</td>
+						</tr>
+					</c:forEach>
 					
 				</table>
 			
 			</c:otherwise>
 		
 		</c:choose>
+		
+		<c:url value="/division-upload" var="uploadLink"></c:url>
+		<form enctype="multipart/form-data" id="uploadForm" class="d-none" action="${ uploadLink }" method="post">
+			<input name="file" id="uploadInput" type="file" />
+		</form>
 	
 	</div>
+	
+	<c:url value="/resources/divisions.js" var="scriptSrc"></c:url>
+	<script type="text/javascript" src="${ scriptSrc }"></script>
 
 </body>
 </html>
