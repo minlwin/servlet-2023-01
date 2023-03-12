@@ -1,11 +1,8 @@
 package com.jdc.shop.controller;
 
-import java.util.*;
+public class SaleCategoryController extends AbstractController{
 
-public class SaleCategoryController {
-
-	public SaleCategoryController() {
-	}
+	private static final long serialVersionUID = 1L;
 
 	private void search() {
 		// TODO implement here

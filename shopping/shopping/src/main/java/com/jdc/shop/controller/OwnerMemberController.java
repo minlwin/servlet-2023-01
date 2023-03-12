@@ -1,11 +1,8 @@
 package com.jdc.shop.controller;
 
-import java.util.*;
+public class OwnerMemberController extends AbstractController{
 
-public class OwnerMemberController {
-
-	public OwnerMemberController() {
-	}
+	private static final long serialVersionUID = 1L;
 
 	private void search() {
 		// TODO implement here

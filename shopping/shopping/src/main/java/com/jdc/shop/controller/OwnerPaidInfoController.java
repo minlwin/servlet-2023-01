@@ -1,11 +1,8 @@
 package com.jdc.shop.controller;
 
-import java.util.*;
+public class OwnerPaidInfoController extends AbstractController{
 
-public class OwnerPaidInfoController {
-
-	public OwnerPaidInfoController() {
-	}
+	private static final long serialVersionUID = 1L;
 
 	private void search() {
 		// TODO implement here

@@ -1,11 +1,8 @@
 package com.jdc.shop.controller;
 
-import java.util.*;
+public class CustomerCartController extends AbstractController{
 
-public class CustomerCartController {
-
-	public CustomerCartController() {
-	}
+	private static final long serialVersionUID = 1L;
 
 	private void addToCart() {
 		// TODO implement here
