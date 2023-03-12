@@ -28,3 +28,11 @@ hs_err_pid*
 */.classpath
 */.project
 */.settings
+
+*/*/build
+*/*/bin
+*/*/target
+*/*/Users
+*/*/.classpath
+*/*/.project
+*/*/.settings
