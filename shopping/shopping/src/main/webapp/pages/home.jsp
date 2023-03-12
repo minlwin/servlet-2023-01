@@ -25,8 +25,5 @@
 	</main>
 	
 	
-	<c:if test="${ empty login }">
-		<jsp:include page="/dialogs/sign-in.jsp"></jsp:include>
-	</c:if>
 </body>
 </html>

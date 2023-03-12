@@ -49,7 +49,8 @@ public class SecurityController extends AbstractController{
 	}
 
 	private void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
-		// TODO implement here
+		req.getSession().invalidate();
+		resp.sendRedirect(getServletContext().getContextPath());
 	}
 
 	private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
