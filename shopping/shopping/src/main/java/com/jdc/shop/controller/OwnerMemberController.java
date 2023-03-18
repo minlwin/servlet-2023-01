@@ -2,13 +2,10 @@ package com.jdc.shop.controller;
 
 import java.io.IOException;
 
-import javax.sql.DataSource;
-
 import com.jdc.shop.model.dto.form.AccountForm;
 import com.jdc.shop.model.service.AccountService;
 import com.jdc.shop.utilities.Integers;
 
-import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,9 +15,6 @@ import jakarta.servlet.http.HttpServletResponse;
 public class OwnerMemberController extends AbstractController {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Resource(name = "jdbc/shopAppDB")
-	private DataSource dataSource;
 	
 	private AccountService service;
 	

@@ -35,7 +35,8 @@
 								
 								<ul class="dropdown-menu">
 									<li>
-										<a class="dropdown-item">
+										<c:url value="/sale/category" var="categoryMasterMenu"></c:url>
+										<a href="${categoryMasterMenu}" class="dropdown-item">
 											<i class="bi bi-tags"></i> Categories
 										</a>
 									</li>
@@ -47,7 +48,8 @@
 									
 									<c:if test="${ login.role eq 'Owner' }">
 										<li>
-											<a class="dropdown-item">
+											<c:url value="/owner/paid-info" var="paidMasterMenu"></c:url>
+											<a href="${paidMasterMenu}" class="dropdown-item">
 												<i class="bi bi-credit-card"></i> Payment Methods
 											</a>
 										</li>

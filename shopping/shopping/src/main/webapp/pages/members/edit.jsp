@@ -23,8 +23,8 @@
 		
 		<div class="row">
 			<div class="col-6">
-				<h3><i class="bi bi-pencil"></i> ${empty param.id ? 'Add New' : 'Edit'} Member</h3>
-				<form method="post" class="mt-3">
+				<h3 class="mb-3"><i class="bi bi-pencil"></i> ${empty param.id ? 'Add New' : 'Edit'} Member</h3>
+				<form method="post">
 				
 					<input type="hidden" name="id" value="${param.id}" />
 					<!-- Role -->	

@@ -20,6 +20,9 @@
 	
 	<!-- Content -->
 	<main class="container pt-3">
+		<!-- Title -->
+		<h3 class="mb-3"><i class="bi bi-people"></i> Members Management</h3>
+		
 		<!-- Search Box -->
 		<form class="row mb-3">
 			<div class="col-auto">
