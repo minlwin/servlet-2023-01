@@ -51,7 +51,7 @@
 						
 						</c:when>
 					
-						<c:when test="${ login.role eq 'Sales' }">
+						<c:when test="${ login.role eq 'Sale' }">
 							<!-- Sales Menu -->
 						
 						</c:when>

@@ -1,10 +1,12 @@
 package com.jdc.shop.controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
-import com.jdc.shop.utilities.LoginUser;
+import javax.sql.DataSource;
 
+import com.jdc.shop.model.service.AccountService;
+
+import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +18,16 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SecurityController extends AbstractController{
 
 	private static final long serialVersionUID = 1L;
+	
+	private AccountService service;
+	
+	@Resource(name = "jdbc/shopAuthDB")
+	private DataSource dataSource;
+	
+	@Override
+	public void init() throws ServletException {
+		service = new AccountService(dataSource);
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,13 +49,10 @@ public class SecurityController extends AbstractController{
 		var loginId = req.getParameter("loginId");
 		var password = req.getParameter("password");
 		
-		var user = new LoginUser();
-		user.setLoginId(loginId);
-		user.setRole(password);
-		user.setName(loginId.toUpperCase());
-		user.setLoginTime(LocalDateTime.now());
+		req.login(loginId, password);
 		
-		req.getSession(true).setAttribute("login", user);
+		var loginUser = service.findLoginUser(loginId);
+		req.getSession(true).setAttribute("login", loginUser);
 		
 		resp.sendRedirect(getServletContext().getContextPath());
 	}

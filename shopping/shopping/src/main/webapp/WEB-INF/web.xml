@@ -4,4 +4,70 @@
   <welcome-file-list>
     <welcome-file>products</welcome-file>
   </welcome-file-list>
+  
+  <security-role>
+  	<role-name>Owner</role-name>
+  </security-role>
+  <security-role>
+  	<role-name>Sale</role-name>
+  </security-role>
+  <security-role>
+  	<role-name>Customer</role-name>
+  </security-role>
+  <security-role>
+  	<role-name>Delivery</role-name>
+  </security-role>
+  
+  <login-config>
+  	<auth-method>FORM</auth-method>
+  	<form-login-config>
+  		<form-login-page>/products</form-login-page>
+  		<form-error-page>/products?error=auth</form-error-page>
+  	</form-login-config>
+  </login-config>
+  
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>Customer Resources</web-resource-name>
+  		<url-pattern>/customer/*</url-pattern>
+  	</web-resource-collection>
+  	<auth-constraint>
+  		<role-name>Customer</role-name>
+  	</auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>Member Resources</web-resource-name>
+  		<url-pattern>/members/*</url-pattern>
+  	</web-resource-collection>
+  	<auth-constraint>
+  		<role-name>Delivery</role-name>
+  		<role-name>Customer</role-name>
+  		<role-name>Sale</role-name>
+  		<role-name>Owner</role-name>
+  	</auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>Sale Resources</web-resource-name>
+  		<url-pattern>/sale/*</url-pattern>
+  	</web-resource-collection>
+  	<auth-constraint>
+  		<role-name>Sale</role-name>
+  		<role-name>Owner</role-name>
+  	</auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>Owner Resources</web-resource-name>
+  		<url-pattern>/owner/*</url-pattern>
+  	</web-resource-collection> 	
+  	<auth-constraint>
+  		<role-name>Owner</role-name>
+  	</auth-constraint>
+  </security-constraint>
+  
 </web-app>
