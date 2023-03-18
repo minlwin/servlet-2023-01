@@ -11,7 +11,7 @@
 								
 				<c:when test="${ not empty login }">
 					<c:choose>
-						<c:when test="${ login.role eq 'Owner' }">
+						<c:when test="${ login.role eq 'Owner' or login.role eq 'Sale' }">
 							<!-- Onwer Menu -->
 							<li class="nav-item">
 								<a  class="nav-link">
@@ -19,11 +19,14 @@
 								</a>
 							</li>
 							
-							<li class="nav-item">
-								<a  class="nav-link">
-									<i class="bi bi-people"></i> Members 
-								</a>
-							</li>
+							<c:if test="${ login.role eq 'Owner' }">
+								<li class="nav-item">
+									<c:url value="/owner/members" var="memberMenu"></c:url>
+									<a href="${memberMenu}" class="nav-link">
+										<i class="bi bi-people"></i> Members 
+									</a>
+								</li>
+							</c:if>
 							
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -41,20 +44,19 @@
 											<i class="bi bi-gift"></i> Products
 										</a>
 									</li>
-									<li>
-										<a class="dropdown-item">
-											<i class="bi bi-credit-card"></i> Payment Methods
-										</a>
-									</li>
+									
+									<c:if test="${ login.role eq 'Owner' }">
+										<li>
+											<a class="dropdown-item">
+												<i class="bi bi-credit-card"></i> Payment Methods
+											</a>
+										</li>
+									</c:if>
 								</ul>
 							</li>
 						
 						</c:when>
 					
-						<c:when test="${ login.role eq 'Sale' }">
-							<!-- Sales Menu -->
-						
-						</c:when>
 						
 						<c:when test="${ login.role eq 'Delivery' }">
 							<!-- Delivery Menu -->

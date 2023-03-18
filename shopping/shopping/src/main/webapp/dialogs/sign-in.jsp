@@ -15,8 +15,8 @@
 			<div class="modal-body">
 			
 				<div class="mb-3">
-					<label for="login" class="form-label">Login Id</label>
-					<input type="text" name="loginId" id="login" class="form-control" placeholder="Enter Login Id" required="required" />
+					<label for="login" class="form-label">Email</label>
+					<input type="email" name="loginId" id="login" class="form-control" placeholder="Enter Login Id" required="required" />
 				</div>
 				
 				<div class="mb-3">

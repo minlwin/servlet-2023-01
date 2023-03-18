@@ -6,7 +6,7 @@
 <div class="modal fade" id="signUpForm">
 	<div class="modal-dialog">
 		<c:url value="/sign-up" var="signUpAction"></c:url>
-		<form action="${ signInAction }" method="post" class="modal-content">
+		<form action="${ signUpAction }" method="post" class="modal-content">
 			
 			<div class="modal-header">
 				<h4>Sign Up</h4>
@@ -20,8 +20,8 @@
 				</div>
 
 				<div class="mb-3">
-					<label for="login" class="form-label">Login Id</label>
-					<input type="text" name="loginId" id="login" class="form-control" placeholder="Enter Login Id" required="required" />
+					<label for="login" class="form-label">Email</label>
+					<input type="email" name="loginId" id="login" class="form-control" placeholder="Enter Login Id" required="required" />
 				</div>
 				
 				<div class="mb-3">
@@ -32,7 +32,7 @@
 			</div>
 			
 			<div class="modal-footer">
-				<button class="btn btn-primary">
+				<button type="submit" class="btn btn-primary">
 					<i class="bi bi-door-open-fill"></i> Sign Up
 				</button>
 			</div>

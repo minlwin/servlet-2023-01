@@ -21,7 +21,7 @@ public class SecurityController extends AbstractController{
 	
 	private AccountService service;
 	
-	@Resource(name = "jdbc/shopAuthDB")
+	@Resource(name = "jdbc/shopAppDB")
 	private DataSource dataSource;
 	
 	@Override
@@ -63,7 +63,13 @@ public class SecurityController extends AbstractController{
 	}
 
 	private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
-		// TODO implement here
+		var name = req.getParameter("name");
+		var loginId = req.getParameter("loginId");
+		var password = req.getParameter("password");
+		
+		service.signUp(name, loginId, password);
+		
+		signIn(req, resp);
 	}
 
 }
