@@ -2,6 +2,7 @@ package com.jdc.shop.controller;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jdc.shop.model.dto.form.PaidInfoForm;
 import com.jdc.shop.model.dto.form.PaidInfoForm.Type;
 import com.jdc.shop.model.service.PaidInfoService;
@@ -21,10 +22,12 @@ public class OwnerPaidInfoController extends AbstractController{
 	private static final long serialVersionUID = 1L;
 	
 	private PaidInfoService service;
+	private ObjectMapper mapper;
 	
 	@Override
 	public void init() throws ServletException {
 		service = new PaidInfoService(dataSource);
+		mapper = new ObjectMapper();
 	}
 	
 	@Override
@@ -58,7 +61,12 @@ public class OwnerPaidInfoController extends AbstractController{
 	}
 
 	private void findById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO implement here
+		var id = Integers.parse(req.getParameter("id"));
+		if(id > 0) {
+			var data = service.findById(id);
+			resp.setContentType("application/json");
+			resp.getOutputStream().write(mapper.writeValueAsBytes(data));
+		}
 	}
 
 }

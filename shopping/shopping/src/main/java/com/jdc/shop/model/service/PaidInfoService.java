@@ -30,7 +30,7 @@ public class PaidInfoService {
 	
 	private void create(PaidInfoForm form) {
 		var sql = """
-				insert into paid_info (pament_type, payment_name, account_number, account_name) 
+				insert into paid_info (payment_type, payment_name, account_number, account_name) 
 				values (?, ?, ?, ?)""";
 
 		try (var conn = dataSource.getConnection(); 
@@ -51,7 +51,7 @@ public class PaidInfoService {
 	private void update(PaidInfoForm form) {
 
 		var sql = """
-				update paid_info set pament_type = ?, payment_name = ?, 
+				update paid_info set payment_type = ?, payment_name = ?, 
 				account_number = ?, account_name = ? where id = ?""";
 
 		try (var conn = dataSource.getConnection(); 

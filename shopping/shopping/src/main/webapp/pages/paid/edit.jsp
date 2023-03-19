@@ -7,7 +7,7 @@
 	<div class="modal-dialog">
 		<c:url value="/owner/paid-info" var="paidInfoForm"></c:url>
 		<form action="${ paidInfoForm }" method="post" class="modal-content">
-			
+			<input id="idInput" type="hidden" name="id" />
 			<div class="modal-header">
 				<h4>Edit Paid Info</h4>
 			</div>
@@ -16,26 +16,26 @@
 			
 				<div class="mb-3">
 					<label for="login" class="form-label">Payment Type</label>
-					<select name="paymentType" class="form-select">
+					<select id="paymentTypeSelect" name="paymentType" required="required" class="form-select">
 						<option value="">All Payments</option>
-						<option value="Banking" ${param.role eq 'Banking' ? 'selected' : ''}>Banking</option>
-						<option value="Mobile" ${param.role eq 'Mobile' ? 'selected' : ''}>Mobile</option>
+						<option value="Banking">Banking</option>
+						<option value="Mobile">Mobile</option>
 					</select>
 				</div>
 				
 				<div class="mb-3">
 					<label class="form-label">Payment Name</label>
-					<input type="text" name="paymentName" class="form-control" placeholder="Enter Payment Name" required="required" />
+					<input id="paymentNameInput" type="text" name="paymentName" class="form-control" placeholder="Enter Payment Name" required="required" />
 				</div>
 			
 				<div class="mb-3">
 					<label class="form-label">Account Number</label>
-					<input type="text" name="accountNumber" class="form-control" placeholder="Enter Account Number" required="required" />
+					<input id="accountNumberInput" type="text" name="accountNumber" class="form-control" placeholder="Enter Account Number" required="required" />
 				</div>
 
 				<div class="mb-3">
 					<label class="form-label">Account Name</label>
-					<input type="text" name="accountName" class="form-control" placeholder="Enter Account Name" required="required" />
+					<input id="accountNameInput" type="text" name="accountName" class="form-control" placeholder="Enter Account Name" required="required" />
 				</div>
 
 			</div>
@@ -48,4 +48,7 @@
 		</form>
 	</div>
 </div>
+
+<c:url value="/resources/paidInfo.js" var="paidJs"></c:url>
+<script src="${paidJs}" ></script>
 

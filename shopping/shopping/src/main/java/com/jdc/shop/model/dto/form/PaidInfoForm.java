@@ -12,6 +12,6 @@ public class PaidInfoForm {
 	private String accountName;
 	
 	public enum Type {
-		Baking, Mobile
+		Banking, Mobile
 	}
 }

@@ -24,15 +24,48 @@
 		<h3 class="mb-3"><i class="bi bi-credit-card"></i> Payment Methods</h3>
 		
 		<div class="mb-3">
-			<a href="#" class="btn btn-outline-danger">
+			<button id="paidInfoAddNewBtn" class="btn btn-outline-danger">
 				<i class="bi bi-plus-lg"></i> Add New
-			</a>
+			</button>
 		</div>
 
 		<!-- Table -->
 		<table class="table table-strpied">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Payment Type</th>
+					<th>Payment Name</th>
+					<th>Account Number</th>
+					<th>Account Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<c:forEach items="${list}" var="item">
+					<tr>
+						<td>${item.id}</td>
+						<td>${item.paymentType}</td>
+						<td>${item.paymentName}</td>
+						<td>${item.accountNumber}</td>
+						<td>${item.accountName}</td>
+						<td>
+							<c:url value="/owner/padi-info/details" var="fetchLink">
+								<c:param name="id" value="${item.id}"></c:param>
+							</c:url>
+							<a data-link="${fetchLink}" class="btn-link paidEditLink">
+								<i class="bi bi-pencil"></i>
+							</a>
+						</td>
+					</tr>
+				
+				</c:forEach>
+			</tbody>
 			
 		</table>
+		
+		<jsp:include page="edit.jsp"></jsp:include>
 	</main>
 	
 	
