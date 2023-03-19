@@ -10,8 +10,8 @@ import com.jdc.shop.model.dto.form.CategoryForm;
 
 public class CategoryService {
 
-	private static final String UPDATE = "insert into category(namve) values (?)";
-	private static final String INSERT = "update category set name = ? where id = ?";
+	private static final String INSERT = "insert into category(name) values (?)";
+	private static final String UPDATE = "update category set name = ? where id = ?";
 
 	private DataSource dataSource;
 
@@ -25,6 +25,7 @@ public class CategoryService {
 
 		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, form.getName());
+			
 			if(form.getId() > 0) {
 				stmt.setInt(2, form.getId());
 			}

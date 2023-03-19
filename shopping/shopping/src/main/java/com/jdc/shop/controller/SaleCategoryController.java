@@ -27,7 +27,7 @@ public class SaleCategoryController extends AbstractController{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var list = service.findAll();
 		req.setAttribute("list", list);
-		forward(req, resp, "/paid/list");
+		forward(req, resp, "/category/list");
 	}
 	
 	@Override
