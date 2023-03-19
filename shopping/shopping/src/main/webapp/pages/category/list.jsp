@@ -31,6 +31,7 @@
 		</div>
 
 		<!-- Grid -->
+		<c:if test="${not empty list}">
 		<div class="row row-cols-3">
 			
 			<c:forEach var="item" items="${list}">
@@ -49,8 +50,14 @@
 				</div>
 			</c:forEach>
 			
-			
 		</div>
+		</c:if>
+
+		<c:if test="${empty list}">
+		<jsp:include page="/includes/no-data.jsp">
+			<jsp:param name="data" value="category"/>
+		</jsp:include>
+		</c:if>
 		
 	</main>
 	

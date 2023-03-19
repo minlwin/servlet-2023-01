@@ -20,6 +20,8 @@ public class PublicProductController extends AbstractController{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var id = Integers.parse(req.getParameter("product-id"));
+		req.setAttribute("main", "master");
+		req.setAttribute("sub", "product");
 		
 		if(id == 0) {
 			search(req, resp);

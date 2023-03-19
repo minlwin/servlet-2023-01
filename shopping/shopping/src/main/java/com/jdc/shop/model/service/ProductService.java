@@ -7,9 +7,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.jdc.shop.model.dto.form.CategoryForm;
-import com.jdc.shop.model.dto.vo.Features;
-import com.jdc.shop.model.dto.vo.Photo;
 import com.jdc.shop.model.dto.vo.ProductDetailsVo;
 import com.jdc.shop.model.dto.vo.ProductListVo;
 import com.jdc.shop.model.dto.vo.ProductVo;
@@ -18,124 +15,25 @@ import com.jdc.shop.utilities.Strings;
 public class ProductService {
 
 	private DataSource dataSource;
+	private ProductCategoryService categories;
+	private ProductFeatureService features;
+	private ProductPhotoService photos;
 
 	public ProductService(DataSource dataSource) {
 		super();
 		this.dataSource = dataSource;
+		categories = new ProductCategoryService(dataSource);
+		features = new ProductFeatureService(dataSource);
+		photos = new ProductPhotoService(dataSource);
 	}
 
 	public ProductDetailsVo findById(int id) {
 		var result = new ProductDetailsVo();
 		result.setProduct(findVoById(id));
-		result.setCategories(findCategoriesByProduct(id));
-		result.setFeatures(findFeaturesByProduct(id));
-		result.setPhotos(findPhotoByProduct(id));
+		result.setCategories(categories.findCategoriesByProduct(id));
+		result.setFeatures(features.findFeaturesByProduct(id));
+		result.setPhotos(photos.findPhotoByProduct(id));
 		return result;
-	}
-
-	private List<Photo> findPhotoByProduct(int id) {
-		List<Photo> list = new ArrayList<>();
-		var sql = "select * from image where product_id = ?";
-
-		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
-			
-			stmt.setInt(1, id);
-			
-			var rs = stmt.executeQuery();
-			
-			while(rs.next()) {
-				var photo = new Photo();
-				photo.setCover(rs.getBoolean("cover"));
-				photo.setPhoto(rs.getString("photo"));
-				list.add(photo);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	private List<Features> findFeaturesByProduct(int id) {
-		
-		List<Features> list = new ArrayList<>();
-		
-		var sql = "select * from feature where product_id = ?";
-
-		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
-
-			stmt.setInt(1, id);
-			
-			var rs = stmt.executeQuery();
-			
-			while(rs.next()) {
-				var feature = new Features();
-				feature.setName(rs.getString("name"));
-				feature.setValue(rs.getString("value"));
-				list.add(feature);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
-
-	private List<CategoryForm> findCategoriesByProduct(int id) {
-		
-		List<CategoryForm> list = new ArrayList<>();
-		var sql = "select * from category c join product_category p on p.category_id = c.id where p.product_id = ?";
-
-		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
-			
-			stmt.setInt(1, id);
-			
-			var rs = stmt.executeQuery();
-			
-			while(rs.next()) {
-				var data = new CategoryForm();
-				data.setId(rs.getInt("id"));
-				data.setName(rs.getString("name"));
-				list.add(data);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
-
-	private ProductVo findVoById(int id) {
-		var sql = "select * from product where id = ?";
-
-		try (var conn = dataSource.getConnection(); 
-				var stmt = conn.prepareStatement(sql)) {
-			
-			stmt.setInt(1, id);
-			var rs = stmt.executeQuery();
-			
-			while(rs.next()) {
-				return getVoData(rs);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-
-	private ProductVo getVoData(ResultSet rs) throws SQLException {
-		var vo = new ProductVo();
-		vo.setId(rs.getInt("id"));
-		vo.setName(rs.getString("name"));
-		vo.setSoldOut(rs.getBoolean("sold_out"));
-		vo.setPrice(rs.getInt("price"));
-		vo.setBrand(rs.getString("brand"));
-		vo.setDescription(rs.getString("description"));
-		return vo;
 	}
 
 	public List<ProductListVo> search(String category, String keyword) {
@@ -173,7 +71,7 @@ public class ProductService {
 			while(rs.next()) {
 				var vo = new ProductListVo();
 				vo.setProduct(getVoData(rs));
-				vo.setCategories(findCategoriesByProduct(vo.getProduct().getId()));
+				vo.setCategories(categories.findCategoriesByProduct(vo.getProduct().getId()));
 				
 				list.add(vo);
 			}
@@ -183,5 +81,38 @@ public class ProductService {
 		}
 		return list;
 	}
+	
+
+
+	private ProductVo findVoById(int id) {
+		var sql = "select * from product where id = ?";
+
+		try (var conn = dataSource.getConnection(); 
+				var stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setInt(1, id);
+			var rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				return getVoData(rs);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	private ProductVo getVoData(ResultSet rs) throws SQLException {
+		var vo = new ProductVo();
+		vo.setId(rs.getInt("id"));
+		vo.setName(rs.getString("name"));
+		vo.setSoldOut(rs.getBoolean("sold_out"));
+		vo.setPrice(rs.getInt("price"));
+		vo.setBrand(rs.getString("brand"));
+		vo.setDescription(rs.getString("description"));
+		return vo;
+	}	
 
 }

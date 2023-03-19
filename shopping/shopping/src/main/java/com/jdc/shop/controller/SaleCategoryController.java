@@ -25,8 +25,13 @@ public class SaleCategoryController extends AbstractController{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		req.setAttribute("main", "master");
+		req.setAttribute("sub", "category");
+
 		var list = service.findAll();
 		req.setAttribute("list", list);
+		
 		forward(req, resp, "/category/list");
 	}
 	

@@ -54,6 +54,7 @@
 		</form>
 		
 		<!-- Member Tables -->	
+		<c:if test="${not empty list}">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -90,6 +91,14 @@
 				
 			</tbody>
 		</table>
+		</c:if>
+		
+		<c:if test="${empty list}">
+		<jsp:include page="/includes/no-data.jsp">
+			<jsp:param name="data" value="member"/>
+		</jsp:include>
+		</c:if>
+		
 	</main>
 	
 	

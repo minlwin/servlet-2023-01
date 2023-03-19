@@ -22,27 +22,27 @@
 							<c:if test="${ login.role eq 'Owner' }">
 								<li class="nav-item">
 									<c:url value="/owner/members" var="memberMenu"></c:url>
-									<a href="${memberMenu}" class="nav-link">
+									<a href="${memberMenu}" class="nav-link ${ main eq 'members' ? 'active' : '' }">
 										<i class="bi bi-people"></i> Members 
 									</a>
 								</li>
 							</c:if>
 							
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+								<a class="nav-link dropdown-toggle ${ main eq 'master' ? 'active' : '' }" data-bs-toggle="dropdown">
 									<i class="bi bi-database"></i> Master Data
 								</a>
 								
 								<ul class="dropdown-menu">
 									<li>
 										<c:url value="/sale/category" var="categoryMasterMenu"></c:url>
-										<a href="${categoryMasterMenu}" class="dropdown-item">
+										<a href="${categoryMasterMenu}" class="dropdown-item ${ sub eq 'category' ? 'active' : '' }">
 											<i class="bi bi-tags"></i> Categories
 										</a>
 									</li>
 									<li>
 										<c:url value="/sale/product" var="productMasterMenu"></c:url>
-										<a href="${productMasterMenu}" class="dropdown-item">
+										<a href="${productMasterMenu}" class="dropdown-item ${ sub eq 'product' ? 'active' : '' }">
 											<i class="bi bi-gift"></i> Products
 										</a>
 									</li>
@@ -50,7 +50,7 @@
 									<c:if test="${ login.role eq 'Owner' }">
 										<li>
 											<c:url value="/owner/paid-info" var="paidMasterMenu"></c:url>
-											<a href="${paidMasterMenu}" class="dropdown-item">
+											<a href="${paidMasterMenu}" class="dropdown-item ${ sub eq 'paid' ? 'active' : '' }">
 												<i class="bi bi-credit-card"></i> Payment Methods
 											</a>
 										</li>

@@ -48,42 +48,51 @@
 		</form>
 		
 		<!-- Member Tables -->	
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th>Category</th>
-					<th>Brand</th>
-					<th>Price</th>
-					<th>Sold Out</th>
-					<th></th>
-				</tr>
-			</thead>
-			
-			<tbody>
-			
-				<c:forEach var="item" items="${list}">
+		<c:if test="${not empty list}">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Category</th>
+						<th>Brand</th>
+						<th>Price</th>
+						<th>Sold Out</th>
+						<th></th>
+					</tr>
+				</thead>
 				
-				<tr>
-					<td>${item.id}</td>
-					<td>${item.name}</td>
-					<td>${item.id}</td>
-					<td>${item.brand}</td>
-					<td>${item.price}</td>
-					<td>${item.soldOut ? 'Yes' : ''}</td>
-					<td>
-						<c:url value="/sale/product/details" var="detailsLink">
-							<c:param name="id" value="${item.id}"></c:param>
-						</c:url>
-						<a href="${detailsLink}" class="btn-link"><i class="bi bi-send"></i></a>
-					</td>
-				</tr>
+				<tbody>
+				
+					<c:forEach var="item" items="${list}">
 					
-				</c:forEach>
-				
-			</tbody>
-		</table>
+					<tr>
+						<td>${item.id}</td>
+						<td>${item.name}</td>
+						<td>${item.id}</td>
+						<td>${item.brand}</td>
+						<td>${item.price}</td>
+						<td>${item.soldOut ? 'Yes' : ''}</td>
+						<td>
+							<c:url value="/sale/product/details" var="detailsLink">
+								<c:param name="id" value="${item.id}"></c:param>
+							</c:url>
+							<a href="${detailsLink}" class="btn-link"><i class="bi bi-send"></i></a>
+						</td>
+					</tr>
+						
+					</c:forEach>
+					
+				</tbody>
+			</table>
+		</c:if>
+		
+		<c:if test="${empty list}">
+			<jsp:include page="/includes/no-data.jsp">
+				<jsp:param name="data" value="product"/>
+			</jsp:include>
+		</c:if>
+		
 	</main>
 	
 	

@@ -27,6 +27,8 @@ public class OwnerMemberController extends AbstractController {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var path = req.getServletPath();
 		
+		req.setAttribute("main", "members");
+		
 		int id = Integers.parse(req.getParameter("id"));
 		if(id > 0) {
 			var account = service.findById(id);

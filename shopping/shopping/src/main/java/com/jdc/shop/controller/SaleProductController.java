@@ -27,6 +27,9 @@ public class SaleProductController extends AbstractController {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		req.setAttribute("main", "master");
+		req.setAttribute("sub", "product");
+		
 		var id = Integers.parse(req.getParameter("id"));
 
 		if (id > 0) {

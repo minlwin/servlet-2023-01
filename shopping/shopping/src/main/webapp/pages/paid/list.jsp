@@ -30,6 +30,7 @@
 		</div>
 
 		<!-- Table -->
+		<c:if test="${not empty list}">
 		<table class="table table-strpied">
 			<thead>
 				<tr>
@@ -64,6 +65,13 @@
 			</tbody>
 			
 		</table>
+		</c:if>
+
+		<c:if test="${empty list}">
+			<jsp:include page="/includes/no-data.jsp">
+				<jsp:param name="data" value="payment method"/>
+			</jsp:include>
+		</c:if>
 		
 		<jsp:include page="edit.jsp"></jsp:include>
 	</main>

@@ -34,6 +34,9 @@ public class OwnerPaidInfoController extends AbstractController{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var path = req.getServletPath();
 		
+		req.setAttribute("main", "master");
+		req.setAttribute("sub", "paid");
+		
 		if("/owner/padi-info/details".equals(path)) {
 			findById(req, resp);
 		} else {
