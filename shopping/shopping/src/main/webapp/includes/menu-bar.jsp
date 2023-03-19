@@ -41,7 +41,8 @@
 										</a>
 									</li>
 									<li>
-										<a class="dropdown-item">
+										<c:url value="/sale/product" var="productMasterMenu"></c:url>
+										<a href="${productMasterMenu}" class="dropdown-item">
 											<i class="bi bi-gift"></i> Products
 										</a>
 									</li>

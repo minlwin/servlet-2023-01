@@ -108,7 +108,7 @@ public class AccountService {
 		return form.getId();
 	}
 
-	private int create(AccountForm form, String password) {
+	public int create(AccountForm form, String password) {
 		
 		var sql = "insert into account(name, role, email, password, phone) values (?, ?, ?, ?, ?)";
 
