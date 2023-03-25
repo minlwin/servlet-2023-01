@@ -2,6 +2,7 @@ package com.jdc.shop.model.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +118,61 @@ public class ProductService {
 	}
 
 	public int save(ProductForm form) {
-		// TODO Auto-generated method stub
+		
+		int id = form.getId();
+		
+		if(id == 0) {
+			id = create(form);
+		} else {
+			update(form);
+		}
+		
+		categories.save(id, form.getCategories());
+		features.save(id, form.getFelatures());
+		
+		return id;
+	}
+
+	private void update(ProductForm form) {
+
+		var sql = "update product set name = ?, price = ?, brand = ?, sold_out = ?, description = ? where id = ?";
+
+		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, form.getName());
+			stmt.setInt(2, form.getPrice());
+			stmt.setString(3, form.getBrand());
+			stmt.setBoolean(4, form.isSoldOut());
+			stmt.setString(5, form.getDescription());
+			stmt.setInt(6, form.getId());
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private int create(ProductForm form) {
+		var sql = "insert into product (name, price, brand, sold_out, description) values (?, ?, ?, ?, ?)";
+
+		try (var conn = dataSource.getConnection(); 
+				var stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			stmt.setString(1, form.getName());
+			stmt.setInt(2, form.getPrice());
+			stmt.setString(3, form.getBrand());
+			stmt.setBoolean(4, form.isSoldOut());
+			stmt.setString(5, form.getDescription());
+			
+			stmt.executeUpdate();
+			
+			var rs = stmt.getGeneratedKeys();
+			
+			while(rs.next()) {
+				return rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}	
 

@@ -17,7 +17,7 @@ public class ProductCategoryService {
 		this.dataSource = dataSource;
 	}
 	
-	public void save(int productId, int [] categories) {
+	public void save(int productId, List<Integer> categories) {
 		
 		var deleteSql = "delete from product_category where product_id = ?";
 		var sql = "insert into product_category(product_id, category_id) values (?, ?)";

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Shop | Member Edit</title>
+<title>My Shop | Product Edit</title>
 
 <jsp:include page="/includes/bootstrap.jsp"></jsp:include>
 </head>

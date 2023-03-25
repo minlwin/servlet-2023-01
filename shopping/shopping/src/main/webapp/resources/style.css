@@ -1,3 +1,18 @@
 .btn-wrapper {
 	padding-top: 2rem;
 }
+
+.productImage {
+	width: 100%;
+}
+
+.features label {
+	color: grey;
+}
+
+.image-control {
+	width: 100px;
+	height: 100px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}

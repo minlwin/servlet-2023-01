@@ -67,15 +67,19 @@
 					<c:forEach var="item" items="${list}">
 					
 					<tr>
-						<td>${item.id}</td>
-						<td>${item.name}</td>
-						<td>${item.id}</td>
-						<td>${item.brand}</td>
-						<td>${item.price}</td>
-						<td>${item.soldOut ? 'Yes' : ''}</td>
+						<td>${item.product.id}</td>
+						<td>${item.product.name}</td>
+						<td class="d-flex flex-column">
+							<c:forEach var="cat" items="${item.categories}">
+								<span>${cat.name}</span>
+							</c:forEach>
+						</td>
+						<td>${item.product.brand}</td>
+						<td>${item.product.price}</td>
+						<td>${item.product.soldOut ? 'Out' : 'In Hand'}</td>
 						<td>
 							<c:url value="/sale/product/details" var="detailsLink">
-								<c:param name="id" value="${item.id}"></c:param>
+								<c:param name="id" value="${item.product.id}"></c:param>
 							</c:url>
 							<a href="${detailsLink}" class="btn-link"><i class="bi bi-send"></i></a>
 						</td>
