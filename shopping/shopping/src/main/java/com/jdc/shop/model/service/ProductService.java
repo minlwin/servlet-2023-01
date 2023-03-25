@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.jdc.shop.model.dto.form.ProductForm;
 import com.jdc.shop.model.dto.vo.ProductDetailsVo;
 import com.jdc.shop.model.dto.vo.ProductListVo;
 import com.jdc.shop.model.dto.vo.ProductVo;
@@ -113,6 +114,11 @@ public class ProductService {
 		vo.setBrand(rs.getString("brand"));
 		vo.setDescription(rs.getString("description"));
 		return vo;
+	}
+
+	public int save(ProductForm form) {
+		// TODO Auto-generated method stub
+		return 0;
 	}	
 
 }
