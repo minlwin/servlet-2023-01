@@ -23,26 +23,27 @@
 		
 		<form method="post">
 			
-			<input type="hidden" name="id" value="${param.id}" />
+			<input type="hidden" name="id" value="${empty dto ? 0 : dto.product.id}" />
+			
 			<h3 class="mb-3"><i class="bi bi-gift"></i> ${empty param.id ? 'Add New' : 'Edit'} Product</h3>
 			
 			<div class="row row-cols-lg-3 row-cols-md-1">
 				<!-- Name -->
 				<div class="col mb-md-2">
 					<label class="form-label">Product Name</label>
-					<input name="productName" type="text" placeholder="Enter Product Name" required="required" class="form-control" />
+					<input name="productName" value="${empty dto ? '' : dto.product.name}" type="text" placeholder="Enter Product Name" required="required" class="form-control" />
 				</div>
 				
 				<!-- Brand -->
 				<div class="col mb-md-2">
 					<label class="form-label">Brand Name</label>
-					<input name="brandName" type="text" placeholder="Enter Brand Name" required="required" class="form-control" />
+					<input name="brandName" value="${empty dto ? '' : dto.product.brand}" type="text" placeholder="Enter Brand Name" required="required" class="form-control" />
 				</div>
 				
 				<!-- Price -->
 				<div class="col mb-md-2">
 					<label class="form-label">Price</label>
-					<input name="price" type="number" placeholder="Enter Price" required="required" class="form-control" />
+					<input name="price" type="number" value="${empty dto ? '' : dto.product.price}" placeholder="Enter Price" required="required" class="form-control" />
 				</div>
 			
 			</div>
@@ -53,7 +54,7 @@
 				<c:forEach items="${categories}" var="item">
 					<div class="col">
 						<div class="form-check">
-							<input name="category" class="form-check-input" type="checkbox" value="${item.id}" id="${item.name}" />
+							<input name="category" class="form-check-input" type="checkbox" ${item.check ? 'checked="checked"' : ''} value="${item.id}" id="${item.name}" />
 							<label for="${item.name}" class="form-chcek-label">${item.name}</label>
 						</div>
 					</div>
@@ -64,7 +65,7 @@
 			<!-- Dynamic Inputs For Features -->
 			<h4 class="mt-4">Add Features</h4>
 			<fieldset id="featureInputs">
-			
+				
 				<div class="row">
 					<div class="col-lg-4 col-md-2">
 						<label class="form-label">Name</label>
@@ -74,15 +75,35 @@
 						<label class="form-label">Value</label>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-4">
-						<input name="featureName" required="required" type="text" placeholder="Enter Feature Name" class="form-control" />
-					</div>
+				<c:choose>
+					<c:when test="${empty dto}">
+						<div class="row">
+							<div class="col-lg-4">
+								<input name="featureName" required="required" type="text" placeholder="Enter Feature Name" class="form-control" />
+							</div>
+							
+							<div class="col">
+								<input name="featureValue" required="required" type="text" placeholder="Enter Feature Value" class="form-control" />
+							</div>
+						</div>
+					</c:when>
 					
-					<div class="col">
-						<input name="featureValue" required="required" type="text" placeholder="Enter Feature Value" class="form-control" />
-					</div>
-				</div>
+					<c:otherwise>
+					
+						<c:forEach items="${dto.features}" var="item" varStatus="status">
+							<div class="row ${status.index gt 0 ? 'mt-2' : ''}">
+								<div class="col-lg-4">
+									<input name="featureName" value="${item.name}" required="required" type="text" placeholder="Enter Feature Name" class="form-control" />
+								</div>
+								
+								<div class="col">
+									<input name="featureValue" value="${item.value}" required="required" type="text" placeholder="Enter Feature Value" class="form-control" />
+								</div>
+							</div>
+						</c:forEach>
+					
+					</c:otherwise>
+				</c:choose>
 			
 			</fieldset>
 			

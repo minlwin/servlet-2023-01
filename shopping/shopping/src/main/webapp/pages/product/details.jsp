@@ -58,7 +58,7 @@
 							<div class="col">
 								<div class="cover">
 									<c:url value="/resources/photos/${cover}" var="coverUrl"></c:url>
-									<img id="productCoverImage" class="img-thumbnail img-fluid" alt="Cover Image" src="${coverUrl}">
+									<img id="productCoverImage" class="img-thumbnail img-fluid cover-image" alt="Cover Image" src="${coverUrl}">
 								</div>
 							</div>
 						</div>
@@ -143,7 +143,10 @@
 		 				<i class="bi bi-camera"></i> Upload Images
 		 			</button>
 		 			<!-- Edit -->
-		 			<a href="#" class="btn btn-primary me-1">
+		 			<c:url value="/sale/product/edit" var="editLink">
+		 				<c:param name="id" value="${dto.product.id}"></c:param>
+		 			</c:url>
+		 			<a href="${editLink}" class="btn btn-primary me-1">
 		 				<i class="bi bi-pencil"></i> Edit
 		 			</a>
 		 			<!-- Set Sold Out -->

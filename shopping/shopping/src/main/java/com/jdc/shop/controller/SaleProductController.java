@@ -45,11 +45,22 @@ public class SaleProductController extends AbstractController {
 		req.setAttribute("sub", "product");
 		
 		var id = Integers.parse(req.getParameter("id"));
+		var dto = id > 0 ? service.findById(id) : null;
 
-		if (id > 0) {
-			var dto = service.findById(id);
-			req.setAttribute("dto", dto);
-			
+		req.setAttribute("dto", dto);
+
+		var page = switch (req.getServletPath()) {
+		
+		case "/sale/product/edit" -> {
+			var all = categories.findAll();
+			if(null != dto) {
+				all = dto.getSelectedCategory(all);
+			}
+			// Categories
+			req.setAttribute("categories", all);
+			yield "edit";
+		}
+		case "/sale/product/details" -> {
 			if(null != dto.getPhotos() && dto.getPhotos().size() > 0) {
 				var coverImage = dto.getPhotos().stream()
 						.filter(a -> a.isCover())
@@ -57,15 +68,8 @@ public class SaleProductController extends AbstractController {
 				
 				req.setAttribute("cover", coverImage.getPhoto());
 			}
+			yield "details";
 		}
-
-		var page = switch (req.getServletPath()) {
-		case "/sale/product/edit" -> {
-			// Categories
-			req.setAttribute("categories", categories.findAll());
-			yield "edit";
-		}
-		case "/sale/product/details" -> "details";
 		default -> {
 			var category = req.getParameter("category");
 			var keyword = req.getParameter("keyword");

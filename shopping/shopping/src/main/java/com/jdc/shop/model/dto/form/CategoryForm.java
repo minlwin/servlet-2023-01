@@ -7,4 +7,6 @@ public class CategoryForm {
 
 	private int id;
 	private String name;
+	
+	private boolean check;
 }

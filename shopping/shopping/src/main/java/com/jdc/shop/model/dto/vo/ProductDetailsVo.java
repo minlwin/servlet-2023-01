@@ -13,4 +13,15 @@ public class ProductDetailsVo {
 	private List<CategoryForm> categories;
 	private List<Features> features;
 	private List<Photo> photos;
+	
+	public List<CategoryForm> getSelectedCategory(List<CategoryForm> all) {
+		
+		for(var cat : all) {
+			if(categories.contains(cat)) {
+				cat.setCheck(true);
+			}
+		}
+		
+		return all;
+	}
 }
