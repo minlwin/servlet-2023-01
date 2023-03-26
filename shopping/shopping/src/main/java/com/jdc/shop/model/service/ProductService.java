@@ -174,6 +174,42 @@ public class ProductService {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	public void setSoldOut(int id, boolean soldOut) {
+		
+		var sql = "update product set sold_out = ? where id = ?";
+
+		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
+			stmt.setBoolean(1, soldOut);
+			stmt.setInt(2, id);
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setCoverImage(int id, String photo) {
+
+		var removeCoverSql = "update image set cover = false where product_id = ?";
+		var setCoverSql = "update image set cover = true where product_id = ? and photo = ?";
+
+		try (var conn = dataSource.getConnection(); 
+				var removeCover = conn.prepareStatement(removeCoverSql);
+				var setCover = conn.prepareStatement(setCoverSql)) {
+
+			removeCover.setInt(1, id);
+			removeCover.executeUpdate();
+			
+			setCover.setInt(1, id);
+			setCover.setString(2, photo);
+			
+			setCover.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}	
 
 }

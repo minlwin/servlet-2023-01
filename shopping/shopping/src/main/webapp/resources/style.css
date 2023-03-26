@@ -10,13 +10,38 @@
 	color: grey;
 }
 
+
+.cover-image {
+	width: 100%;
+}
+
 .image-control {
 	width: 100px;
 	height: 100px;
 	margin-bottom: 10px;
 	cursor: pointer;
+	overflow: hidden;
 }
 
-.cover-image {
-	width: 100%;
+.ribbon {
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	overflow: hidden;
+}
+
+
+.ribbon span {
+	display: block;
+	width: 80px;
+	text-align: center;
+	padding: 4px 0px;
+	background-color: red;
+	color: white;
+	font-size: x-small;
+	font-weight: bold;
+	position: absolute;
+	transform: rotate(-45deg);
+	right: 20px;
+	top: 5px;
 }

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>    
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>  
+
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +32,7 @@
  		<div class="row row-cols-4 mb-4">
  			<c:forEach items="${dto.categories}" var="item">
  				<div class="col">
-					<h5 class="card-title">
+					<h5>
 						<i class="bi bi-tag"></i> ${item.name}
 					</h5>
  				</div>
@@ -39,42 +42,7 @@
  		<div class="row">
 			
 			<div class="col">
-				<!-- Images -->
-				<c:choose>
-					<c:when test="${not empty dto.photos}">
-						
-						<div class="row">
-							<div class="col-auto">
-								<div class="list d-flex flex-column">
-									<c:forEach items="${dto.photos}" var="photo">
-										<div class="image-control">
-											<c:url value="/resources/photos/${photo.photo}" var="photoUrl"></c:url>
-											<img class="img-thumbnail img-fluid" src="${photoUrl}" alt="Product Photo" />
-										</div>
-									</c:forEach>
-								</div>
-							</div>
-							
-							<div class="col">
-								<div class="cover">
-									<c:url value="/resources/photos/${cover}" var="coverUrl"></c:url>
-									<img id="productCoverImage" class="img-thumbnail img-fluid cover-image" alt="Cover Image" src="${coverUrl}">
-								</div>
-							</div>
-						</div>
-					
-						
-					
-					</c:when>
-					
-					<c:otherwise>
-						<div class="img img-thumbnail">
-							<c:url value="/resources/photos/product-image.png" var="defaultImage"></c:url>
-							<img class="productImage" alt="Product Image" src="${defaultImage}">							
-						</div>
-					</c:otherwise>
-				</c:choose>
-			
+				<custom:product-image photos="${dto.photos}" cover="${cover}"></custom:product-image>
 			</div>
 			
 			<div class="col features">
@@ -136,21 +104,34 @@
 		 			<p>${dto.product.description}</p>
 		 		</c:if>
 		 		
-			
 		 		<div class="mt-4">
 		 			<!-- Upload Photo -->
-		 			<button id="uploadBtn" class="btn btn-success me-1">
+		 			<button id="uploadBtn" class="btn btn-outline-success me-1">
 		 				<i class="bi bi-camera"></i> Upload Images
 		 			</button>
+		 		
+		 			<!-- Delete Current Image -->
+		 			<button id="deleteImageBtn" class="btn btn-outline-success me-1">
+		 				<i class="bi bi-trash2"></i> Delete Photo
+		 			</button>
+		 			
+		 			<!-- Set Cover Photo -->
+		 			<button id="setCoverBtn" class="btn btn-outline-success me-1">
+		 				<i class="bi bi-image"></i> Set Cover
+		 			</button>
+		 		</div>
+		 		
+			
+		 		<div class="mt-3">
 		 			<!-- Edit -->
 		 			<c:url value="/sale/product/edit" var="editLink">
 		 				<c:param name="id" value="${dto.product.id}"></c:param>
 		 			</c:url>
-		 			<a href="${editLink}" class="btn btn-primary me-1">
+		 			<a href="${editLink}" class="btn btn-outline-primary me-1">
 		 				<i class="bi bi-pencil"></i> Edit
 		 			</a>
 		 			<!-- Set Sold Out -->
-		 			<button class="btn btn-danger">
+		 			<button id="soldOutBtn" class="btn btn-outline-danger">
 		 				<i class="bi ${dto.product.soldOut ? 'bi-check' : 'bi-x-lg'}"></i> Set ${dto.product.soldOut ? 'In House' : 'Sold Out'}
 		 			</button>
 		 		</div>
@@ -162,6 +143,18 @@
  		<form id="uploadForm" enctype="multipart/form-data" action="${photoUploadAction}" class="d-none" method="post">
  			<input type="hidden" name="id" value="${dto.product.id}" />
  			<input type="file" multiple="multiple" name="image" id="uploadInput" />
+ 		</form>
+ 		
+ 		<c:url value="/sale/product/soldout" var="soldOutAction"></c:url>
+ 		<form action="${soldOutAction}" class="d-none" method="post" id="soldOutForm">
+ 			<input type="hidden" name="id" value="${dto.product.id}" />
+			<input type="hidden" name="soldOut" value="${!dto.product.soldOut}"> 		
+ 		</form>
+ 		
+ 		<c:url value="/sale/product/cover" var="setCoverUrl"></c:url>
+ 		<form id="setCoverForm" action="${setCoverUrl}" method="post" class="d-none">
+ 			<input type="hidden" name="id" value="${dto.product.id}" />
+			<input id="setCoverInput" type="hidden" name="cover" value="${cover}">		
  		</form>
  		
  		<c:url value="/resources/product-details-admin.js" var="script"></c:url>

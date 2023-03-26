@@ -19,6 +19,8 @@ import jakarta.servlet.http.HttpServletResponse;
 		"/sale/product", 
 		"/sale/product/edit", 
 		"/sale/product/details", 
+		"/sale/product/soldout", 
+		"/sale/product/cover", 
 		"/sale/product/photo",
 
 }, loadOnStartup = 1)
@@ -93,7 +95,19 @@ public class SaleProductController extends AbstractController {
 			var parts = req.getParts();
 			photoService.uploadPhotos(id, new ArrayList<>(parts), getServletContext().getRealPath("/resources/photos"));
 		}
+		
+		case "/sale/product/soldout" -> {
+			var soldOutStr = req.getParameter("soldOut");
+			var soldOut = Boolean.parseBoolean(soldOutStr);
+			
+			service.setSoldOut(id, soldOut);
+		}
 
+		case "/sale/product/cover" -> {
+			var cover = req.getParameter("cover");
+			service.setCoverImage(id, cover);
+		}
+		
 		default -> {
 			// Save Product
 			var name = req.getParameter("productName");
