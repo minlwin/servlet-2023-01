@@ -85,6 +85,12 @@
 							<div class="col">
 								<input name="featureValue" required="required" type="text" placeholder="Enter Feature Value" class="form-control" />
 							</div>
+
+							<div class="col-auto">
+								<button type="button" class="btn btn-outline-danger delete-feature">
+									<i class="bi bi-trash"></i>
+								</button>
+							</div>
 						</div>
 					</c:when>
 					
@@ -98,6 +104,12 @@
 								
 								<div class="col">
 									<input name="featureValue" value="${item.value}" required="required" type="text" placeholder="Enter Feature Value" class="form-control" />
+								</div>
+								
+								<div class="col-auto">
+									<button type="button" class="btn btn-outline-danger delete-feature">
+										<i class="bi bi-trash"></i>
+									</button>
 								</div>
 							</div>
 						</c:forEach>

@@ -50,6 +50,28 @@ public class ProductPhotoService {
 		}
 		
 	}
+	
+	public void setCoverImage(int id, String photo) {
+
+		var removeCoverSql = "update image set cover = false where product_id = ?";
+		var setCoverSql = "update image set cover = true where product_id = ? and photo = ?";
+
+		try (var conn = dataSource.getConnection(); 
+				var removeCover = conn.prepareStatement(removeCoverSql);
+				var setCover = conn.prepareStatement(setCoverSql)) {
+
+			removeCover.setInt(1, id);
+			removeCover.executeUpdate();
+			
+			setCover.setInt(1, id);
+			setCover.setString(2, photo);
+			
+			setCover.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}		
 
 	private String saveImage(int id, Part part, String imageFoloder, int index) throws IOException {
 		var originalName = part.getSubmittedFileName();
@@ -87,6 +109,25 @@ public class ProductPhotoService {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public void deleteImage(int id, String imageFoloder, String photo) {
+		
+		var sql = "delete from image where product_id = ? and photo = ?";
+
+		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, id);
+			stmt.setString(2, photo);
+			
+			stmt.executeUpdate();
+			
+			// Delete Photo File
+			Files.delete(Path.of(imageFoloder, photo));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -1,5 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
 	
+	Array.from(document.getElementsByClassName('delete-feature')).forEach(btn => {
+		btn.addEventListener('click', () => {
+			const row = btn.parentElement.parentElement
+			const features = row.parentElement
+			
+			features.removeChild(row)
+		})
+	})
+	
 	const addFeatrueBtn = document.getElementById('addFeatrueBtn')
 	
 	if(addFeatrueBtn) {
@@ -19,13 +28,30 @@ document.addEventListener('DOMContentLoaded', () => {
 			
 			const valueCol = document.createElement('div')
 			valueCol.setAttribute('class', 'col')
+			
 			let valueInput = document.createElement('input')
 			valueInput.setAttribute('class', 'form-control')
 			valueInput.setAttribute('placeholder', 'Enter Feature Name')
 			valueInput.setAttribute('name', 'featureValue')
-			valueCol.appendChild(valueInput)			
+			valueCol.appendChild(valueInput)	
 			
-			row.append(nameCol, valueCol)
+			const deleteCol = document.createElement('div')
+			deleteCol.setAttribute('class', 'col-auto')
+			
+			let deleteBtn = document.createElement('button')
+			deleteBtn.setAttribute('class', 'btn btn-outline-danger delete-feature')
+			deleteBtn.setAttribute('type', 'button')
+			
+			let deleteIcon = document.createElement('i')
+			deleteIcon.setAttribute('class', 'bi bi-trash')
+			deleteBtn.appendChild(deleteIcon)
+			deleteCol.appendChild(deleteBtn)	
+			
+			deleteBtn.addEventListener('click', () => {
+				featureInputs.removeChild(row)
+			})
+			
+			row.append(nameCol, valueCol, deleteCol)
 			
 			featureInputs.appendChild(row)
 		})

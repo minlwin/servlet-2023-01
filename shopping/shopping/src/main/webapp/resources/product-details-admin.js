@@ -36,4 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		setCoverBtn.addEventListener('click', () => setCoverForm.submit())
 	}
 	
+	const deleteImageBtn = document.getElementById('deleteImageBtn')
+	const deleteImageInput = document.getElementById('deleteImageInput')
+	
+	if(deleteImageBtn && deleteImageInput && setCoverForm) {
+		deleteImageBtn.addEventListener('click', () => {
+			deleteImageInput.value = 'true'
+			setCoverForm.submit()
+		})
+	}
+	
 })

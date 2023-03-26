@@ -109,16 +109,20 @@
 		 			<button id="uploadBtn" class="btn btn-outline-success me-1">
 		 				<i class="bi bi-camera"></i> Upload Images
 		 			</button>
-		 		
-		 			<!-- Delete Current Image -->
-		 			<button id="deleteImageBtn" class="btn btn-outline-success me-1">
-		 				<i class="bi bi-trash2"></i> Delete Photo
-		 			</button>
 		 			
-		 			<!-- Set Cover Photo -->
-		 			<button id="setCoverBtn" class="btn btn-outline-success me-1">
-		 				<i class="bi bi-image"></i> Set Cover
-		 			</button>
+		 			<c:if test="${ not empty dto.photos }">
+			 			<!-- Delete Current Image -->
+			 			<button id="deleteImageBtn" class="btn btn-outline-success me-1">
+			 				<i class="bi bi-trash2"></i> Delete Photo
+			 			</button>
+			 			
+			 			<!-- Set Cover Photo -->
+			 			<button id="setCoverBtn" class="btn btn-outline-success me-1">
+			 				<i class="bi bi-image"></i> Set Cover
+			 			</button>
+		 			
+		 			</c:if>
+		 		
 		 		</div>
 		 		
 			
@@ -155,6 +159,7 @@
  		<form id="setCoverForm" action="${setCoverUrl}" method="post" class="d-none">
  			<input type="hidden" name="id" value="${dto.product.id}" />
 			<input id="setCoverInput" type="hidden" name="cover" value="${cover}">		
+ 			<input id="deleteImageInput" type="hidden" name="delete" value="false" />
  		</form>
  		
  		<c:url value="/resources/product-details-admin.js" var="script"></c:url>

@@ -8,6 +8,7 @@ import com.jdc.shop.model.service.CategoryService;
 import com.jdc.shop.model.service.ProductPhotoService;
 import com.jdc.shop.model.service.ProductService;
 import com.jdc.shop.utilities.Integers;
+import com.jdc.shop.utilities.Strings;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -87,13 +88,14 @@ public class SaleProductController extends AbstractController {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		var id = Integers.parse(req.getParameter("id"));
+		var imageFolder = getServletContext().getRealPath("/resources/photos");
 
 		switch (req.getServletPath()) {
 		
 		case "/sale/product/photo" -> {
 			// Photo Upload
 			var parts = req.getParts();
-			photoService.uploadPhotos(id, new ArrayList<>(parts), getServletContext().getRealPath("/resources/photos"));
+			photoService.uploadPhotos(id, new ArrayList<>(parts), imageFolder);
 		}
 		
 		case "/sale/product/soldout" -> {
@@ -105,7 +107,14 @@ public class SaleProductController extends AbstractController {
 
 		case "/sale/product/cover" -> {
 			var cover = req.getParameter("cover");
-			service.setCoverImage(id, cover);
+			var deleteStr = req.getParameter("delete");
+			var delete = Strings.isBlanck(deleteStr) ? false : Boolean.parseBoolean(deleteStr);
+			
+			if(delete) {
+				photoService.deleteImage(id, imageFolder, cover);
+			} else {
+				photoService.setCoverImage(id, cover);
+			}
 		}
 		
 		default -> {
