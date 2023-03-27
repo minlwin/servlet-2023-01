@@ -14,13 +14,13 @@
 	<nav>
 		<!-- Menu Bar -->
 		<jsp:include page="/includes/menu-bar.jsp"></jsp:include>
-	
-		<!-- Search Box -->
 	</nav>
 	
 	
 	<!-- Product List -->
 	<main>
+		<!-- Banner -->
+		<jsp:include page="/includes/banner.jsp"></jsp:include>
 	
 	</main>
 	

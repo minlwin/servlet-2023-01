@@ -2,11 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<div class="navbar navbar-expand navbar-dark bg-primary">
-	<div class="container">
-		<a class="navbar-brand"><i class="bi bi-shop"></i> Easy Shopping</a>
+<c:url value="/products" var="homeUrl"></c:url>
+<div class="navbar navbar-expand fixed-top navbar-dark bg-primary">
+	<form action="${homeUrl}" class="container">
+		<a href="${homeUrl}" class="navbar-brand"><i class="bi bi-shop"></i> Easy Shopping</a>
 	
 		<ul class="navbar-nav">
+			<li class="nav-item d-flex me-4">
+				<div class="input-group">
+					<input name="keyword" type="text" class="form-control" placeholder="Search Keyword" />
+					<button class="input-group-text">
+						<i class="bi bi-search"></i>
+					</button>
+				</div>
+			</li>
 			<c:choose>
 								
 				<c:when test="${ not empty login }">
@@ -68,12 +77,14 @@
 					
 						<c:when test="${ login.role eq 'Customer' }">
 							<!-- Customer Menu -->
-						
-							<li class="nav-item">
-								<a  class="nav-link">
-									<i class="bi bi-cart4"></i> My Cart 0
-								</a>
-							</li>
+							
+							<c:if test="${ not empty cart and cart.size gt 0 }">
+								<li class="nav-item">
+									<a  class="nav-link">
+										<i class="bi bi-cart4"></i> My Cart 0
+									</a>
+								</li>
+							</c:if>
 						</c:when>
 					
 					</c:choose>
@@ -87,11 +98,13 @@
 				
 				<c:otherwise>
 					<!-- Anonymous Menu -->
-					<li class="nav-item">
-						<a class="nav-link">
-							<i class="bi bi-cart4"></i> My Cart 0
-						</a>
-					</li>
+					<c:if test="${ not empty cart and cart.size gt 0 }">
+						<li class="nav-item">
+							<a  class="nav-link">
+								<i class="bi bi-cart4"></i> My Cart 0
+							</a>
+						</li>
+					</c:if>
 					
 					<li class="nav-item">
 						<a id="signUpMenu" class="nav-link">
@@ -109,7 +122,7 @@
 			</c:choose>		
 		</ul>
 		
-	</div>
+	</form>
 </div>
 
 <c:choose>

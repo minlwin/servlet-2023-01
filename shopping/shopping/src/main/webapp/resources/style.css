@@ -10,6 +10,11 @@
 	color: grey;
 }
 
+main {
+	position: relative;
+	top: 56px;
+}
+
 
 .cover-image {
 	width: 100%;
