@@ -2,6 +2,7 @@ package com.jdc.shop.controller;
 
 import java.io.IOException;
 
+import com.jdc.shop.model.service.ProductService;
 import com.jdc.shop.utilities.Integers;
 
 import jakarta.servlet.ServletException;
@@ -10,33 +11,53 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(
-		urlPatterns = {"/products"},
+		urlPatterns = {
+				"/public",
+				"/products"
+		},
 		loadOnStartup = 1
 )
 public class PublicProductController extends AbstractController{
 
 	private static final long serialVersionUID = 1L;
 	
+	private ProductService service;
+	
+	@Override
+	public void init() throws ServletException {
+		service = new ProductService(dataSource);
+	}
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var id = Integers.parse(req.getParameter("product-id"));
+		var path = req.getServletPath();
 		
-		if(id == 0) {
-			search(req, resp);
-		} else {
-			showDetails(req, resp, id);
+		switch (path) {
+		case "/public": 
+			forward(req, resp, "home");
+			break;
+		default: 
+			if(id == 0) {
+				search(req, resp);
+			} else {
+				showDetails(req, resp, id);
+			}
+			break;
 		}
+		
 	}
 
 	private void search(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Get Search Params
+		var keyword = req.getParameter("keyword");
 		
 		// Search with service
-		
 		// set result to request scope
+		req.setAttribute("list", service.search(keyword));
 		
 		// forward to home.jsp
-		forward(req, resp, "home");
+		forward(req, resp, "public/product/list");
 	}
 
 	private void showDetails(HttpServletRequest req, HttpServletResponse resp, int productId) throws ServletException, IOException {
@@ -45,7 +66,7 @@ public class PublicProductController extends AbstractController{
 		// set result to request scope
 
 		// forward to /product/details.jsp
-		forward(req, resp, "product/details");
+		forward(req, resp, "public/product/details");
 	}
 
 }

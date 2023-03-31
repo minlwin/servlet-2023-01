@@ -2,9 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<c:url value="/products" var="homeUrl"></c:url>
+<c:url value="/products" var="searchProduct"></c:url>
+<c:url value="/public" var="homeUrl"></c:url>
+
 <div class="navbar navbar-expand fixed-top navbar-dark bg-primary">
-	<form action="${homeUrl}" class="container">
+	<form action="${searchProduct}" class="container">
 		<a href="${homeUrl}" class="navbar-brand"><i class="bi bi-shop"></i> Easy Shopping</a>
 	
 		<ul class="navbar-nav">

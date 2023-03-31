@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>    
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>  
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,30 @@
 	<main>
 		<!-- Banner -->
 		<jsp:include page="/includes/banner.jsp"></jsp:include>
+		
+		<div class="container">
+		
+			<section class="row mt-4 text-center">
+				
+				<div class="col">
+					<app:cover-info icon="bi-search">
+						<h2>Search you want!</h2>
+					</app:cover-info>
+				</div>
+				
+				<div class="col">
+					<app:cover-info icon="bi-cart-plus">
+						<h2>Get it now!</h2>
+					</app:cover-info>
+				</div>
+	
+				<div class="col">
+					<app:cover-info icon="bi-emoji-smile">
+						<h2>Be Happy!</h2>
+					</app:cover-info>
+				</div>
+			</section>
+		</div>
 	
 	</main>
 	
