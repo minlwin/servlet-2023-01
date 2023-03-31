@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>    
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +29,13 @@
 
 		<!-- Grid -->
 		<c:if test="${not empty list}">
-
-			
+			<div class="row row-cols-4 g-2 mt-2">
+				<c:forEach items="${list}" var="item">
+					<div class="col">
+						<app:public-product dto="${item}"></app:public-product>
+					</div>
+				</c:forEach>
+			</div>
 		</c:if>
 
 		<c:if test="${empty list}">

@@ -62,9 +62,9 @@ public class PublicProductController extends AbstractController{
 
 	private void showDetails(HttpServletRequest req, HttpServletResponse resp, int productId) throws ServletException, IOException {
 		// Find Product Details info by product id
-		
 		// set result to request scope
-
+		req.setAttribute("dto", service.findById(productId));
+		
 		// forward to /product/details.jsp
 		forward(req, resp, "public/product/details");
 	}

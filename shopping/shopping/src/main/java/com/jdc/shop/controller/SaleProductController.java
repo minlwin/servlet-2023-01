@@ -64,19 +64,12 @@ public class SaleProductController extends AbstractController {
 			yield "edit";
 		}
 		case "/sale/product/details" -> {
-			if(null != dto.getPhotos() && dto.getPhotos().size() > 0) {
-				var coverImage = dto.getPhotos().stream()
-						.filter(a -> a.isCover())
-						.findAny().orElse(dto.getPhotos().get(0));
-				
-				req.setAttribute("cover", coverImage.getPhoto());
-			}
 			yield "details";
 		}
 		default -> {
 			var category = req.getParameter("category");
 			var keyword = req.getParameter("keyword");
-			req.setAttribute("list", service.search(category, keyword));
+			req.setAttribute("list", service.searchForAdmin(category, keyword));
 			yield "list";
 		}
 		};

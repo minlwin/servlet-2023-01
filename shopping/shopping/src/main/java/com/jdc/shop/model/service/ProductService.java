@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import com.jdc.shop.model.dto.form.ProductForm;
 import com.jdc.shop.model.dto.vo.ProductDetailsVo;
 import com.jdc.shop.model.dto.vo.ProductListVo;
+import com.jdc.shop.model.dto.vo.ProductPublicVo;
 import com.jdc.shop.model.dto.vo.ProductVo;
 import com.jdc.shop.utilities.Strings;
 
@@ -20,6 +21,13 @@ public class ProductService {
 	private ProductCategoryService categories;
 	private ProductFeatureService features;
 	private ProductPhotoService photos;
+	
+	private static final String SELECT_PRODUCT  = """
+			select p.id, p.name, p.price, p.brand, p.description, p.sold_out  
+			from product p 
+			join product_category pc on p.id = pc.product_id 
+			join category c on pc.category_id = c.id 
+			where 1 = 1""";
 
 	public ProductService(DataSource dataSource) {
 		super();
@@ -38,16 +46,11 @@ public class ProductService {
 		return result;
 	}
 
-	public List<ProductListVo> search(String category, String keyword) {
+	public List<ProductListVo> searchForAdmin(String category, String keyword) {
 		
 		List<ProductListVo> list = new ArrayList<>();
 		
-		var sql = new StringBuffer("""
-				select p.id, p.name, p.price, p.brand, p.description, p.sold_out  
-				from product p 
-				join product_category pc on p.id = pc.product_id 
-				join category c on pc.category_id = c.id 
-				where 1 = 1""");
+		var sql = new StringBuffer(SELECT_PRODUCT);
 		var params = new ArrayList<>();
 		
 		if(Strings.isNotBlanck(category)) {
@@ -190,9 +193,37 @@ public class ProductService {
 		}
 	}
 
-	public List<ProductDetailsVo> search(String keyword) {
+	public List<ProductPublicVo> search(String keyword) {
+		var result = new ArrayList<ProductPublicVo>();
+		var sql = new StringBuffer(SELECT_PRODUCT);
+		var params = new ArrayList<>();
 
-		return null;
+		if(Strings.isNotBlanck(keyword)) {
+			sql.append(" and (lower(p.name) like ? or lower(p.brand) like ?)");
+			params.add(keyword.toLowerCase().concat("%"));
+			params.add(keyword.toLowerCase().concat("%"));
+		}
+		try (var conn = dataSource.getConnection(); 
+				var stmt = conn.prepareStatement(sql.toString())) {
+			
+			for(var i = 0; i < params.size(); i ++) {
+				stmt.setObject(i + 1, params.get(i));
+			}
+			
+			var rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				var vo = new ProductPublicVo();
+				vo.setProduct(getVoData(rs));
+				vo.setCategories(categories.findCategoriesByProduct(vo.getProduct().getId()));
+				vo.setPhotos(photos.findPhotoByProduct(vo.getProduct().getId()));
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 
