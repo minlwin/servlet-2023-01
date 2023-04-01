@@ -106,7 +106,10 @@
 		 		
 		 		<div class="mt-4">
 		 			<!-- Add To Cart -->
-		 			<a href="#" class="btn btn-outline-primary me-1">
+		 			<c:url value="/cart/add" var="addToCartLink">
+		 				<c:param name="id" value="${dto.product.id}"></c:param>
+		 			</c:url>
+		 			<a href="${addToCartLink}" class="btn btn-outline-primary me-1">
 		 				<i class="bi bi-cart-plus"></i> Add To Cart
 		 			</a>
 		 		</div>

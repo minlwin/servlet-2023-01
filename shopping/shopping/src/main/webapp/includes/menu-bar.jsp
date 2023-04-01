@@ -4,6 +4,7 @@
 
 <c:url value="/products" var="searchProduct"></c:url>
 <c:url value="/public" var="homeUrl"></c:url>
+<c:url value="/cart/show" var="myCartUrl"></c:url>
 
 <div class="navbar navbar-expand fixed-top navbar-dark bg-primary">
 	<form action="${searchProduct}" class="container">
@@ -82,8 +83,8 @@
 							
 							<c:if test="${ not empty cart and cart.size gt 0 }">
 								<li class="nav-item">
-									<a  class="nav-link">
-										<i class="bi bi-cart4"></i> My Cart 0
+									<a href="${myCartUrl}" class="nav-link">
+										<i class="bi bi-cart4"></i> My Cart ${cart.size}
 									</a>
 								</li>
 							</c:if>
@@ -102,8 +103,8 @@
 					<!-- Anonymous Menu -->
 					<c:if test="${ not empty cart and cart.size gt 0 }">
 						<li class="nav-item">
-							<a  class="nav-link">
-								<i class="bi bi-cart4"></i> My Cart 0
+							<a href="${myCartUrl}" class="nav-link">
+								<i class="bi bi-cart4"></i> My Cart ${cart.size}
 							</a>
 						</li>
 					</c:if>
