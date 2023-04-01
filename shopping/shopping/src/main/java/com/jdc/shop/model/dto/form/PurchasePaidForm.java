@@ -8,5 +8,9 @@ import lombok.Data;
 public class PurchasePaidForm implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
+	private int paidInfoId;
+	private int amount;
+	private String screenShoot;
 
 }

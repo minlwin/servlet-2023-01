@@ -67,5 +67,21 @@ public class ShoppingCart implements Serializable{
 	public void setAddress(PurchaseAddressForm address) {
 		this.address = address;
 	}
+	
+	public int getTotalPaid() {
+		if(null != paidInformations && !paidInformations.isEmpty()) {
+			return paidInformations.stream().mapToInt(PurchasePaidForm::getAmount).sum();
+		}
+		
+		return 0;
+	}
+	
+	public int getRemain() {
+		return getTotal() - getTotalPaid();
+	}
+	
+	public boolean isPaid() {
+		return getRemain() <= 0;
+	}
 
 }
