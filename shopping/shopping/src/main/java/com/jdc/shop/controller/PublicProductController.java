@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(
-		urlPatterns = {
-				"/public",
-				"/products"
-		},
+		urlPatterns = "/products",
 		loadOnStartup = 1
 )
 public class PublicProductController extends AbstractController{
@@ -31,19 +28,10 @@ public class PublicProductController extends AbstractController{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var id = Integers.parse(req.getParameter("product-id"));
-		var path = req.getServletPath();
-		
-		switch (path) {
-		case "/public": 
-			forward(req, resp, "home");
-			break;
-		default: 
-			if(id == 0) {
-				search(req, resp);
-			} else {
-				showDetails(req, resp, id);
-			}
-			break;
+		if(id == 0) {
+			search(req, resp);
+		} else {
+			showDetails(req, resp, id);
 		}
 		
 	}
