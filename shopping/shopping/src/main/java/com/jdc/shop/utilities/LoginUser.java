@@ -9,7 +9,8 @@ import lombok.Data;
 public class LoginUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private int id;
 	private String name;
 	private String role;
 	private String loginId;

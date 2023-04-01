@@ -30,12 +30,14 @@
 				<div class="col">
 					<app:cover-info icon="bi-search">
 						<h2>Search you want!</h2>
+						<p>You can search every thing you want!</p>
 					</app:cover-info>
 				</div>
 				
 				<div class="col">
 					<app:cover-info icon="bi-cart-plus">
 						<h2>Get it now!</h2>
+						<p>If you found you want, you can add item to your cart.</p>
 					</app:cover-info>
 				</div>
 	

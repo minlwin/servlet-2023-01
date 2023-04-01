@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.sql.DataSource;
 
 import com.jdc.shop.model.service.AccountService;
+import com.jdc.shop.utilities.ShoppingCart;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
@@ -51,10 +52,18 @@ public class SecurityController extends AbstractController{
 		
 		req.login(loginId, password);
 		
-		var loginUser = service.findLoginUser(loginId);
-		req.getSession(true).setAttribute("login", loginUser);
+		var session = req.getSession(true);
 		
-		resp.sendRedirect(getServletContext().getContextPath());
+		var loginUser = service.findLoginUser(loginId);
+		session.setAttribute("login", loginUser);
+		String page = "";
+		
+		if(loginUser.getRole().equals("Customer")) {
+			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+			page = (null != cart && !cart.getItems().isEmpty()) ? "/customer/cart/checkout" : "";
+		}
+		
+		resp.sendRedirect(getServletContext().getContextPath().concat(page));
 	}
 
 	private void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {

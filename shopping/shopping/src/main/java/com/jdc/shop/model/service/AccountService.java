@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.jdc.shop.model.dto.form.AccountForm;
+import com.jdc.shop.model.dto.form.PurchaseAddressForm;
 import com.jdc.shop.utilities.LoginUser;
 import com.jdc.shop.utilities.Strings;
 
@@ -24,7 +25,7 @@ public class AccountService {
 
 	public LoginUser findLoginUser(String loginId) {
 		
-		var sql = "select name, role from account where email = ?";
+		var sql = "select id, name, role from account where email = ?";
 
 		try (var conn = dataSource.getConnection(); 
 				var stmt = conn.prepareStatement(sql)) {
@@ -35,9 +36,10 @@ public class AccountService {
 			
 			while(rs.next()) {
 				var loginUser = new LoginUser();
+				loginUser.setId(rs.getInt("id"));
 				loginUser.setLoginId(loginId);
-				loginUser.setName(rs.getString(1));
-				loginUser.setRole(rs.getString(2));
+				loginUser.setName(rs.getString("name"));
+				loginUser.setRole(rs.getString("role"));
 				loginUser.setLoginTime(LocalDateTime.now());
 				return loginUser;
 			}
@@ -182,6 +184,38 @@ public class AccountService {
 		form.setRole("Customer");
 		
 		create(form, password);
+	}
+
+	public List<PurchaseAddressForm> findAddressForCustomer(int id) {
+		
+		List<PurchaseAddressForm> list = new ArrayList<>();
+		
+		var sql = "select * from address where account_id = ?";
+
+		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
+			stmt.setInt(1, id);
+			
+			var rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				var dto = new PurchaseAddressForm();
+				dto.setId(rs.getInt("id"));
+				dto.setName(rs.getString("name"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setStreet(rs.getString("street"));
+				dto.setBuilding(rs.getString("building"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	public PurchaseAddressForm findAddressById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

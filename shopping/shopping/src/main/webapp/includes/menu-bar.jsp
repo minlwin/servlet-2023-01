@@ -110,13 +110,13 @@
 					</c:if>
 					
 					<li class="nav-item">
-						<a id="signUpMenu" class="nav-link">
+						<a class="nav-link signUpMenu">
 							<i class="bi bi-door-open-fill"></i> Sign Up 
 						</a>
 					</li>
 
 					<li class="nav-item">
-						<a id="signInMenu" class="nav-link">
+						<a class="nav-link signInMenu">
 							<i class="bi bi-door-open"></i> Sign In 
 						</a>
 					</li>

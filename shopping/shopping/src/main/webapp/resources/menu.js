@@ -1,21 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-	let signInMenu = document.getElementById('signInMenu')
 	
-	if(signInMenu) {
-		signInMenu.addEventListener('click', () => {
+	let signInMenus = Array.from(document.getElementsByClassName('signInMenu'))
+	signInMenus.forEach(menu => {
+		menu.addEventListener('click', () => {
 			let dialog = new bootstrap.Modal('#signInForm')
 			dialog.show()
 		})
-	}
-
-	let signUpMenu = document.getElementById('signUpMenu')
-	
-	if(signUpMenu) {
-		signUpMenu.addEventListener('click', () => {
+	})
+		
+	let signUpMenus = Array.from(document.getElementsByClassName('signUpMenu'))
+	signUpMenus.forEach(menu => {
+		menu.addEventListener('click', () => {
 			let dialog = new bootstrap.Modal('#signUpForm')
 			dialog.show()
 		})
-	}
+	})
 	
 	let signOutMenu = document.getElementById('signOutMenu')
 	

@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jdc.shop.model.dto.form.PurchaseAddressForm;
+import com.jdc.shop.model.dto.form.PurchasePaidForm;
 import com.jdc.shop.model.dto.vo.CartItemVo;
 import com.jdc.shop.model.dto.vo.ProductDetailsVo;
 
@@ -13,10 +15,13 @@ public class ShoppingCart implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	private PurchaseAddressForm address;
+	private List<PurchasePaidForm> paidInformations;
 	private Map<Integer, CartItemVo> items;
 	
 	public ShoppingCart() {
 		items = new LinkedHashMap<>();
+		paidInformations = new ArrayList<>();
 	}
 
 	public boolean add(int productId) {
@@ -34,6 +39,14 @@ public class ShoppingCart implements Serializable{
 		items.put(product.getProduct().getId(), item);
 	}
 	
+	public PurchaseAddressForm getAddress() {
+		return address;
+	}
+	
+	public List<PurchasePaidForm> getPaidInformations() {
+		return paidInformations;
+	}
+	
 	public int getSize() {
 		if(!items.isEmpty()) {
 			return items.values().stream()
@@ -49,6 +62,10 @@ public class ShoppingCart implements Serializable{
 	
 	public int getTotal() {
 		return getItems().stream().mapToInt(CartItemVo::getTotal).sum();
+	}
+
+	public void setAddress(PurchaseAddressForm address) {
+		this.address = address;
 	}
 
 }
