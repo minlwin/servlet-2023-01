@@ -63,7 +63,7 @@ public class SecurityController extends AbstractController{
 			page = (null != cart && !cart.getItems().isEmpty()) ? "/cart/checkout" : "";
 		}
 		
-		resp.sendRedirect(getServletContext().getContextPath().concat(page));
+		redirect(resp, page);
 	}
 
 	private void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {

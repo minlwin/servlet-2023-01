@@ -44,7 +44,7 @@ public class SaleCategoryController extends AbstractController{
 		
 		service.save(form);
 		
-		resp.sendRedirect(getServletContext().getContextPath().concat("/sale/category"));
+		redirect(resp, "/sale/category");
 	}
 
 }

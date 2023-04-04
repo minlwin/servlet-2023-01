@@ -46,7 +46,7 @@ public class PaidController extends AbstractController{
 		}
 		
 		req.setAttribute("paidInfoList", paidInfoService.findAll());
-		forward(req, resp, "public/cart/payment");
+		forward(req, resp, "cart/view");
 	}
 	
 	@Override

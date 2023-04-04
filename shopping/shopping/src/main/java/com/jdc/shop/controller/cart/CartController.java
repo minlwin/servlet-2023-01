@@ -42,7 +42,7 @@ public class CartController extends AbstractController{
 	private void checkOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var login = req.getSession(true).getAttribute("login");
 		if(null == login) {
-			forward(req, resp, "public/cart/contents");
+			forward(req, resp, "cart/view");
 		} else {
 			resp.sendRedirect(getServletContext().getContextPath().concat("/customer/cart/payment"));
 		}

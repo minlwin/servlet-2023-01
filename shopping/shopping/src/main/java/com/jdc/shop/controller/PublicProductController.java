@@ -45,7 +45,7 @@ public class PublicProductController extends AbstractController{
 		req.setAttribute("list", service.search(keyword));
 		
 		// forward to home.jsp
-		forward(req, resp, "public/product/list");
+		forward(req, resp, "public/product-list");
 	}
 
 	private void showDetails(HttpServletRequest req, HttpServletResponse resp, int productId) throws ServletException, IOException {
@@ -54,7 +54,7 @@ public class PublicProductController extends AbstractController{
 		req.setAttribute("dto", service.findById(productId));
 		
 		// forward to /product/details.jsp
-		forward(req, resp, "public/product/details");
+		forward(req, resp, "public/product-details");
 	}
 
 }

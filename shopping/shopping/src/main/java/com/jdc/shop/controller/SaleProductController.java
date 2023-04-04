@@ -131,8 +131,7 @@ public class SaleProductController extends AbstractController {
 		
 		}
 		
-		resp.sendRedirect(getServletContext().getContextPath()
-				.concat("/sale/product/details".concat("?id=%d".formatted(id))));
+		redirect(resp, "/sale/product/details".concat("?id=%d".formatted(id)));
 
 	}
 

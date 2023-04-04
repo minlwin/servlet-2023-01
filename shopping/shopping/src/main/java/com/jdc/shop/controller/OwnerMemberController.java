@@ -54,7 +54,7 @@ public class OwnerMemberController extends AbstractController {
 		form.setPhone(req.getParameter("phone"));
 		
 		int id = service.save(form);
-		resp.sendRedirect(getServletContext().getContextPath().concat("/owner/members/details?id=%d".formatted(id)));
+		redirect(resp, "/owner/members/details?id=%d".formatted(id));
 	}
 
 	private void search(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

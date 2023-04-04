@@ -60,7 +60,7 @@ public class OwnerPaidInfoController extends AbstractController{
 		
 		service.save(form);
 		
-		resp.sendRedirect(getServletContext().getContextPath().concat("/owner/paid-info"));
+		redirect(resp, "/owner/paid-info");
 	}
 
 	private void findById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
