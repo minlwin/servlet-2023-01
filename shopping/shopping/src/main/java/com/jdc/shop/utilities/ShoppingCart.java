@@ -84,4 +84,12 @@ public class ShoppingCart implements Serializable{
 		return getRemain() <= 0;
 	}
 
+	public void addPaidInfo(PurchasePaidForm paidForm) {
+		paidInformations.add(paidForm);
+	}
+
+	public void removePaid(int index) {
+		paidInformations.remove(index);
+	}
+
 }

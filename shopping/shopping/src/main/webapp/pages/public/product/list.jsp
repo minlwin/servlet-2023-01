@@ -29,7 +29,7 @@
 
 		<!-- Grid -->
 		<c:if test="${not empty list}">
-			<div class="row row-cols-4 g-2 mt-2">
+			<div class="row row-cols-4 g-4 mt-2">
 				<c:forEach items="${list}" var="item">
 					<div class="col">
 						<app:public-product dto="${item}"></app:public-product>

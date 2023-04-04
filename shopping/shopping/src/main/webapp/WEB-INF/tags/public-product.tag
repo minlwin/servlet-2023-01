@@ -5,7 +5,7 @@
 <div class="card">
 	
 	<c:url value="/resources/photos/${dto.coverImage}" var="coverUrl"></c:url>
-	<img src="${coverUrl}" alt="Cover Image" class="card-image-top image-responsive w-100" />
+	<img src="${coverUrl}" alt="Cover Image" class="card-image-top image-responsive public-product-image" />
 	
 	<div class="card-footer">
 		<h5 class="card-title">

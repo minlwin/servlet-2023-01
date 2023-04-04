@@ -81,14 +81,13 @@ public class SaleProductController extends AbstractController {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		var id = Integers.parse(req.getParameter("id"));
-		var imageFolder = getServletContext().getRealPath("/resources/photos");
 
 		switch (req.getServletPath()) {
 		
 		case "/sale/product/photo" -> {
 			// Photo Upload
 			var parts = req.getParts();
-			photoService.uploadPhotos(id, new ArrayList<>(parts), imageFolder);
+			photoService.uploadPhotos(id, new ArrayList<>(parts), getImageFolder());
 		}
 		
 		case "/sale/product/soldout" -> {
@@ -104,7 +103,7 @@ public class SaleProductController extends AbstractController {
 			var delete = Strings.isBlanck(deleteStr) ? false : Boolean.parseBoolean(deleteStr);
 			
 			if(delete) {
-				photoService.deleteImage(id, imageFolder, cover);
+				photoService.deleteImage(id, getImageFolder(), cover);
 			} else {
 				photoService.setCoverImage(id, cover);
 			}

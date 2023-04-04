@@ -21,4 +21,11 @@ public abstract class AbstractController extends HttpServlet{
 		getServletContext().getRequestDispatcher("/pages/%s.jsp".formatted(view)).forward(req, resp);
 	}
 
+	protected void redirect(HttpServletResponse resp, String path) throws IOException {
+		resp.sendRedirect(getServletContext().getContextPath().concat(path));
+	}
+	
+	protected String getImageFolder() {
+		return getServletContext().getRealPath("/resources/photos");
+	}
 }

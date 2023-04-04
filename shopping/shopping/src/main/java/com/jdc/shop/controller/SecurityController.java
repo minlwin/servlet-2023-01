@@ -60,7 +60,7 @@ public class SecurityController extends AbstractController{
 		
 		if(loginUser.getRole().equals("Customer")) {
 			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-			page = (null != cart && !cart.getItems().isEmpty()) ? "/customer/cart/checkout" : "";
+			page = (null != cart && !cart.getItems().isEmpty()) ? "/cart/checkout" : "";
 		}
 		
 		resp.sendRedirect(getServletContext().getContextPath().concat(page));

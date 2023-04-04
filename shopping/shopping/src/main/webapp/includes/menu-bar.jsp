@@ -4,7 +4,7 @@
 
 <c:url value="/products" var="searchProduct"></c:url>
 <c:url value="/public" var="homeUrl"></c:url>
-<c:url value="/cart/show" var="myCartUrl"></c:url>
+<c:url value="/cart/checkout" var="myCartUrl"></c:url>
 
 <div class="navbar navbar-expand fixed-top navbar-dark bg-primary">
 	<form action="${searchProduct}" class="container">

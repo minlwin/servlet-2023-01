@@ -24,18 +24,16 @@
 	<!-- Content -->
 	<main class="container pt-3">
 		
-		<h3 class="mb-3">
+		<h3>
 			<i class="bi bi-gift"></i> ${dto.product.name}
  		</h3>
  		
  		<!-- Category -->
- 		<div class="row row-cols-4 mb-4">
+ 		<div class="d-flex mb-3">
  			<c:forEach items="${dto.categories}" var="item">
- 				<div class="col">
-					<h5>
-						<i class="bi bi-tag"></i> ${item.name}
-					</h5>
- 				</div>
+				<h5 class="me-4">
+					<i class="bi bi-tag"></i> ${item.name}
+				</h5>
  			</c:forEach>
  		</div>
  		

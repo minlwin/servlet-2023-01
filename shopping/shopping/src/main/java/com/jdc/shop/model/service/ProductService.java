@@ -23,7 +23,7 @@ public class ProductService {
 	private ProductPhotoService photos;
 	
 	private static final String SELECT_PRODUCT  = """
-			select p.id, p.name, p.price, p.brand, p.description, p.sold_out  
+			select distinct p.id, p.name, p.price, p.brand, p.description, p.sold_out  
 			from product p 
 			join product_category pc on p.id = pc.product_id 
 			join category c on pc.category_id = c.id 

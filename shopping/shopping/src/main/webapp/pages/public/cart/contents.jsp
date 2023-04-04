@@ -24,21 +24,17 @@
 	<!-- Content -->
 	<main class="container pt-3">
 		<!-- Title -->
-		<h3 class="mb-3"><i class="bi bi-cart-check"></i> My Cart</h3>
+		<h3><i class="bi bi-cart-check"></i> My Cart</h3>
 		
-		<app:cart-contents items="${cart.items}"></app:cart-contents>
-		
-		<div class="mt-4">
-			<c:choose>
-				<c:when test="${not empty login}">
-					<c:url value="/customer/cart/checkout" var="checkOutLink"></c:url>
-					<a href="${checkOutLink}" class="btn btn-outline-primary">
-						<i class="bi bi-cart-check"></i> Check Out
-					</a>
-				</c:when>
-				
-				<c:otherwise>
-					<h4>Check Out Operation</h4>	
+		<div class="row mt-4">
+			
+			<div class="col-8">
+				<app:cart-contents items="${cart.items}"></app:cart-contents>
+			</div>
+			
+			<div class="col">
+				<app:card>
+					<h4><i class="bi bi-check"></i> Check Out Operation</h4>	
 					<p>You need to sign in or sign up for check out operation.</p>			
 					<div>
 						<button class="btn btn-outline-primary me-2 signUpMenu">
@@ -46,11 +42,12 @@
 						</button>
 						<button class="btn btn-outline-primary signInMenu">
 							<i class="bi bi-door-open"></i> Sign In 
- 						</button>
+							</button>
 					</div>
-				</c:otherwise>
-			</c:choose>
-		</div>	
+				</app:card>
+			</div>
+			
+		</div>
 	</main>
 	
 	
