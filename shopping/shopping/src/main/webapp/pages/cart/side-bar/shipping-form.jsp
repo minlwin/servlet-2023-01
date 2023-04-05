@@ -17,7 +17,9 @@
 			<div class="mb-3">
 				<label class="form-label">Select shipping address</label>
 				<select name="id" class="form-select">
-					<option value="">Primary Address</option>
+					<c:forEach items="${addresses}" var="item" varStatus="status">
+					<option value="${item.id}">Address ${status.index + 1}</option>
+					</c:forEach>
 				</select>
 			</div>
 		</c:if>

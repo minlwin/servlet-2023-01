@@ -43,7 +43,7 @@ public class OwnerPaidInfoController extends AbstractController{
 			var list = service.findAll();
 			req.setAttribute("list", list);
 			
-			forward(req, resp, "/paid/list");
+			forward(req, resp, "paid/list");
 		}
 	}
 	

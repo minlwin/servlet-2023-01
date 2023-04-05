@@ -3,8 +3,10 @@ package com.jdc.shop.controller.cart;
 import java.io.IOException;
 
 import com.jdc.shop.controller.AbstractController;
+import com.jdc.shop.model.service.CheckOutService;
 import com.jdc.shop.model.service.ProductService;
 import com.jdc.shop.utilities.Integers;
+import com.jdc.shop.utilities.LoginUser;
 import com.jdc.shop.utilities.ShoppingCart;
 
 import jakarta.servlet.ServletException;
@@ -24,10 +26,12 @@ public class CartController extends AbstractController{
 	private static final String MY_CART = "cart";
 	
 	private ProductService service;
+	private CheckOutService checkOutService;
 	
 	@Override
 	public void init() throws ServletException {
 		service = new ProductService(dataSource);
+		checkOutService = new CheckOutService(dataSource);
 	}
 	
 	@Override
@@ -39,12 +43,22 @@ public class CartController extends AbstractController{
 		}
 	}
 	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		var cart = (ShoppingCart)req.getSession().getAttribute("cart");
+		var login = (LoginUser)req.getSession(true).getAttribute("login");
+		
+		var id = checkOutService.purchase(login.getId(), cart);
+		
+		redirect(resp, "/member/order?id=%d".formatted(id));
+	}
+	
 	private void checkOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		var login = req.getSession(true).getAttribute("login");
 		if(null == login) {
 			forward(req, resp, "cart/view");
 		} else {
-			resp.sendRedirect(getServletContext().getContextPath().concat("/customer/cart/payment"));
+			redirect(resp, "/customer/cart/payment");
 		}
 	}
 
@@ -65,10 +79,7 @@ public class CartController extends AbstractController{
 			cart.addNewProduct(product);
 		}
 		
-		resp.sendRedirect(getServletContext().getContextPath().concat("/products?product-id=%d".formatted(productId)));
+		redirect(resp, "/products?product-id=%d".formatted(productId));
 	}
-
-
-
 
 }

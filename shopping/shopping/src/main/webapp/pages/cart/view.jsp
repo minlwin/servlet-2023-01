@@ -35,8 +35,18 @@
 				</div>
 				
 				<!-- Paid History -->
+				<c:if test="${cart.totalPaid gt 0}">
+					<div class="mb-4">
+						<app:cart-paid-history items="${cart.paidInformations}"></app:cart-paid-history>
+					</div>				
+				</c:if>
 				
 				<!-- Shipping Information -->
+				<c:if test="${not empty cart.address}">
+					<div class="mb-4">
+						<app:cart-shipping address="${cart.address}"></app:cart-shipping>
+					</div>
+				</c:if>
 			</div>
 			
 			<div class="col">
@@ -56,7 +66,7 @@
 							<c:otherwise>
 							
 								<c:choose>
-									<c:when test="${not empty cart.address}">
+									<c:when test="${empty cart.address}">
 										<jsp:include page="side-bar/shipping-form.jsp"></jsp:include>
 									</c:when>
 									

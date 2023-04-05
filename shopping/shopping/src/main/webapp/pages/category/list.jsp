@@ -32,7 +32,7 @@
 
 		<!-- Grid -->
 		<c:if test="${not empty list}">
-		<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+		<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3">
 			
 			<c:forEach var="item" items="${list}">
 				<div class="col">

@@ -86,7 +86,9 @@ public class ProductForm {
 		}
 
 		public Builder categories(String[] array) {
-			this.categories = Arrays.stream(array).map(Integers::parse).toList();
+			if(null != array) {
+				this.categories = Arrays.stream(array).map(Integers::parse).toList();
+			}
 			return this;
 		}
 

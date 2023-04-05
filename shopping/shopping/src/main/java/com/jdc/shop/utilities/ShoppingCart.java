@@ -43,6 +43,10 @@ public class ShoppingCart implements Serializable{
 		return address;
 	}
 	
+	public void setAddress(PurchaseAddressForm address) {
+		this.address = address;
+	}
+	
 	public List<PurchasePaidForm> getPaidInformations() {
 		return paidInformations;
 	}
@@ -64,10 +68,6 @@ public class ShoppingCart implements Serializable{
 		return getItems().stream().mapToInt(CartItemVo::getTotal).sum();
 	}
 
-	public void setAddress(PurchaseAddressForm address) {
-		this.address = address;
-	}
-	
 	public int getTotalPaid() {
 		if(null != paidInformations && !paidInformations.isEmpty()) {
 			return paidInformations.stream().mapToInt(PurchasePaidForm::getAmount).sum();

@@ -71,7 +71,11 @@ public class PaidController extends AbstractController{
 		ShoppingCart cart = (ShoppingCart) req.getSession().getAttribute("cart");
 		cart.addPaidInfo(paidForm);
 		
-		redirect(resp, "/customer/cart/payment");
+		if(cart.getRemain() > 0) {
+			redirect(resp, "/customer/cart/payment");
+		} else {
+			redirect(resp, "/customer/cart/shipping");
+		}
 	}
 
 	private String createImage(Part screenShoot) {

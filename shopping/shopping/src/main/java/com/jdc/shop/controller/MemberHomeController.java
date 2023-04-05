@@ -4,7 +4,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 
 @WebServlet(
-		urlPatterns = {"/member"},
+		urlPatterns = {"/members"},
 		loadOnStartup = 1
 )
 public class MemberHomeController extends HttpServlet{
