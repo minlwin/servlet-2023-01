@@ -25,7 +25,7 @@ public class ProductPhotoService {
 	
 	public void uploadPhotos(int id, List<Part> parts, String imageFoloder) {
 		
-		var sql = "insert into image(product_id, photo) values (?, ?)";
+		var sql = "insert into image(product_id, photo, cover) values (?, ?, ?)";
 
 		try (var conn = dataSource.getConnection(); 
 				var stmt = conn.prepareStatement(sql)) {
@@ -39,6 +39,7 @@ public class ProductPhotoService {
 				
 				stmt.setInt(1, id);
 				stmt.setString(2, fileName);
+				stmt.setBoolean(3, i == 0);
 				
 				stmt.addBatch();
 			}

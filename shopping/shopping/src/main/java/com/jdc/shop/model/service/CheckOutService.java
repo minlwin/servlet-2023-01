@@ -1,9 +1,9 @@
 package com.jdc.shop.model.service;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.sql.DataSource;
 
@@ -13,22 +13,24 @@ public class CheckOutService {
 	
 	private DataSource dataSource;
 	private AddressService addressService;
+	private OrderItemService itemService;
+	private OrderPaidService paidService;
 	
 	public CheckOutService(DataSource dataSource) {
 		super();
 		this.dataSource = dataSource;
 		addressService = new AddressService(dataSource);
+		itemService = new OrderItemService(dataSource);
+		paidService = new OrderPaidService(dataSource);
 	}
 
 	public int purchase(int customerId, ShoppingCart cart) {
 		
 		
-		var purchaseSql = "insert into purchase (account_id, purchase_date, status, address_id) value (?, ?, ?, ?)";
-		var purchaseItemSql = "insert into purcahse_item (purchase_id, product_id, quentity, unit_price) value (?, ?, ?, ?)";
+		var sql = "insert into purchase (account_id, purchase_date, status, address_id) value (?, ?, ?, ?)";
 
 		try (var conn = dataSource.getConnection(); 
-				var purchaseStmt = conn.prepareStatement(purchaseSql, Statement.RETURN_GENERATED_KEYS);
-				var purchaseItemStmt = conn.prepareStatement(purchaseItemSql)) {
+				var stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			
 			// Create Shipping Address
 			var addressId = cart.getAddress().getId();
@@ -38,28 +40,23 @@ public class CheckOutService {
 			}
 
 			// Create Purchase
-			purchaseStmt.setInt(1, customerId);
-			purchaseStmt.setDate(2, Date.valueOf(LocalDate.now()));
-			purchaseStmt.setString(3, "Ordered");
-			purchaseStmt.setInt(4, addressId);
+			stmt.setInt(1, customerId);
+			stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+			stmt.setString(3, "Ordered");
+			stmt.setInt(4, addressId);
 			
-			purchaseStmt.executeUpdate();
+			stmt.executeUpdate();
 			
-			var rs = purchaseStmt.getGeneratedKeys();
+			var rs = stmt.getGeneratedKeys();
 			
 			if(rs.next()) {
 				var purchaseId = rs.getInt(1);
-				// Create Purchase Items
-				for(var item : cart.getItems()) {
-					purchaseItemStmt.setInt(1, purchaseId);
-					purchaseItemStmt.setInt(2, item.getProduct().getProduct().getId());
-					purchaseItemStmt.setInt(3, item.getQuantity());
-					purchaseItemStmt.setInt(4, item.getUnitPrice());
-					
-					purchaseItemStmt.addBatch();
-				}
 				
-				purchaseItemStmt.executeBatch();
+				// Create Purchase Items
+				itemService.create(purchaseId, cart.getItems());
+				
+				// Create Paid Informations
+				paidService.create(purchaseId, cart.getPaidInformations());
 				
 				return purchaseId;
 			}

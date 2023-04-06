@@ -22,11 +22,16 @@ public class OrderService {
 	private OrderItemService itemService;
 	private OrderMessageService messageService;
 	private OrderDeliveryService deliveryService;
+	private OrderPaidService paidService;
 
 	public OrderService(DataSource dataSource) {
 		super();
 		this.dataSource = dataSource;
 		addressService = new AddressService(dataSource);
+		itemService = new OrderItemService(dataSource);
+		messageService = new OrderMessageService(dataSource);
+		deliveryService = new OrderDeliveryService(dataSource);
+		paidService = new OrderPaidService(dataSource);
 	}
 
 	
@@ -109,6 +114,7 @@ public class OrderService {
 				result.setItems(itemService.findByOrderId(id));
 				result.setDeilvery(deliveryService.findByOrderId(id));
 				result.setMessages(messageService.findByOrderId(id));
+				result.setPaids(paidService.findByOrderId(id));
 				return result;
 			}
 		} catch (SQLException e) {
@@ -122,7 +128,7 @@ public class OrderService {
 		vo.setId(rs.getInt("id"));
 		vo.setCustomerId(rs.getInt("customerId"));
 		vo.setCustomerName(rs.getString("customerName"));
-		vo.setOrderDate(rs.getDate("orderDate").toLocalDate());
+		vo.setOrderDate(rs.getTimestamp("orderDate").toLocalDateTime());
 		vo.setStatus(rs.getString("status"));
 		vo.setTotalAmount(rs.getInt("totalAmount"));
 		vo.setRemark(rs.getString("remark"));
