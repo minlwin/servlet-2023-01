@@ -140,5 +140,5 @@
 	</c:otherwise>
 </c:choose>
 
-<c:url value="/resources/menu.js" var="menuJs"></c:url>
+<c:url value="/resources/js/menu.js" var="menuJs"></c:url>
 <script type="text/javascript" src="${ menuJs }"></script>

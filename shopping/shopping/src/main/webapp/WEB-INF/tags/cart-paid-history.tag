@@ -58,5 +58,5 @@
 </app:modal-dialog>
 
 
-<c:url value="/resources/cart-paid-history.js" var="scriptUrl"></c:url>
+<c:url value="/resources/js/cart-paid-history.js" var="scriptUrl"></c:url>
 <script src="${scriptUrl}"></script>

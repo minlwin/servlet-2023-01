@@ -3,6 +3,7 @@ package com.jdc.shop.controller.cart;
 import java.io.IOException;
 
 import com.jdc.shop.controller.AbstractController;
+import com.jdc.shop.model.service.AddressService;
 import com.jdc.shop.model.service.CheckOutService;
 import com.jdc.shop.model.service.ProductService;
 import com.jdc.shop.utilities.Integers;
@@ -27,11 +28,13 @@ public class CartController extends AbstractController{
 	
 	private ProductService service;
 	private CheckOutService checkOutService;
+	private AddressService addressService;
 	
 	@Override
 	public void init() throws ServletException {
 		service = new ProductService(dataSource);
 		checkOutService = new CheckOutService(dataSource);
+		addressService = new AddressService(dataSource);
 	}
 	
 	@Override
@@ -39,6 +42,10 @@ public class CartController extends AbstractController{
 		if("/cart/add".equals(req.getServletPath())) {
 			addToCart(req, resp);
 		} else {
+			LoginUser login = (LoginUser) req.getSession().getAttribute("login");
+			if(null != login) {
+				req.setAttribute("addresses", addressService.findAddressForCustomer(login.getId()));
+			}
 			checkOut(req, resp);
 		}
 	}

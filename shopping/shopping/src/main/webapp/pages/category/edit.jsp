@@ -32,5 +32,5 @@
 	</div>
 </div>
 
-<c:url value="/resources/category.js" var="categoryJS"></c:url>
+<c:url value="/resources/js/category.js" var="categoryJS"></c:url>
 <script src="${categoryJS}" ></script>

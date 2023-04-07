@@ -52,7 +52,7 @@ public class OrderItemService {
 	
 	public void create(int purchaseId, List<CartItemVo> items) {
 		
-		var sql = "insert into purcahse_item (purchase_id, product_id, quantity, unit_price) value (?, ?, ?, ?)";
+		var sql = "insert into purchase_item (purchase_id, product_id, quantity, unit_price) value (?, ?, ?, ?)";
 
 		try (var conn = dataSource.getConnection(); 
 				var stmt = conn.prepareStatement(sql)) {

@@ -58,6 +58,8 @@ public class CheckOutService {
 				// Create Paid Informations
 				paidService.create(purchaseId, cart.getPaidInformations());
 				
+				cart.clear();
+				
 				return purchaseId;
 			}
 			

@@ -48,5 +48,5 @@
 	</form>	
 </app:card>
 
-<c:url value="/resources/cart-paid-form.js" var="scriptUrl"></c:url>
+<c:url value="/resources/js/cart-paid-form.js" var="scriptUrl"></c:url>
 <script src="${scriptUrl}"></script>

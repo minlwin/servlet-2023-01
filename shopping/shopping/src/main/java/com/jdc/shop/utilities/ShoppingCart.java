@@ -20,8 +20,7 @@ public class ShoppingCart implements Serializable{
 	private Map<Integer, CartItemVo> items;
 	
 	public ShoppingCart() {
-		items = new LinkedHashMap<>();
-		paidInformations = new ArrayList<>();
+		clear();
 	}
 
 	public boolean add(int productId) {
@@ -90,6 +89,12 @@ public class ShoppingCart implements Serializable{
 
 	public void removePaid(int index) {
 		paidInformations.remove(index);
+	}
+
+	public void clear() {
+		address = null;
+		items = new LinkedHashMap<>();
+		paidInformations = new ArrayList<>();
 	}
 
 }

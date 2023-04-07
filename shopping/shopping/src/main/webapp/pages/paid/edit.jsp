@@ -49,6 +49,6 @@
 	</div>
 </div>
 
-<c:url value="/resources/paidInfo.js" var="paidJs"></c:url>
+<c:url value="/resources/js/paidInfo.js" var="paidJs"></c:url>
 <script src="${paidJs}" ></script>
 

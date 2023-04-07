@@ -160,7 +160,7 @@
  			<input id="deleteImageInput" type="hidden" name="delete" value="false" />
  		</form>
  		
- 		<c:url value="/resources/product-details-admin.js" var="script"></c:url>
+ 		<c:url value="/resources/js/product-details-admin.js" var="script"></c:url>
  		<script src="${script}"></script>
 
 	</main>

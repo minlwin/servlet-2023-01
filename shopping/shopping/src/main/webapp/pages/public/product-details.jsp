@@ -116,7 +116,7 @@
  		
  		</div>
  		
- 		<c:url value="/resources/product-details-public.js" var="script"></c:url>
+ 		<c:url value="/resources/js/product-details-public.js" var="script"></c:url>
  		<script src="${script}"></script>
 	</main>
 	

@@ -9,8 +9,10 @@ import java.time.format.DateTimeFormatter;
 
 import com.jdc.shop.controller.AbstractController;
 import com.jdc.shop.model.dto.form.PurchasePaidForm;
+import com.jdc.shop.model.service.AddressService;
 import com.jdc.shop.model.service.PaidInfoService;
 import com.jdc.shop.utilities.Integers;
+import com.jdc.shop.utilities.LoginUser;
 import com.jdc.shop.utilities.ShoppingCart;
 
 import jakarta.servlet.ServletException;
@@ -30,15 +32,20 @@ public class PaidController extends AbstractController{
 	private static final long serialVersionUID = 1L;
 	
 	private PaidInfoService paidInfoService;
+	private AddressService addressService;
 	
 	@Override
 	public void init() throws ServletException {
 		paidInfoService = new PaidInfoService(dataSource);
+		addressService = new AddressService(dataSource);
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		LoginUser login = (LoginUser) req.getSession().getAttribute("login");
+		req.setAttribute("addresses", addressService.findAddressForCustomer(login.getId()));
+
 		if("/customer/cart/payment/delete".equals(req.getServletPath())) {
 			var index = Integers.parse(req.getParameter("index"));
 			ShoppingCart cart = (ShoppingCart) req.getSession().getAttribute("cart");

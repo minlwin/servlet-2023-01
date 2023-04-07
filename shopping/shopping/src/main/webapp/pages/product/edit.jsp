@@ -139,7 +139,7 @@
 		</form>
 	</main>
 	
-	<c:url value="/resources/product-edit.js" var="productEditJs"></c:url>
+	<c:url value="/resources/js/product-edit.js" var="productEditJs"></c:url>
 	<script src="${productEditJs}"></script>
 	
 </body>
