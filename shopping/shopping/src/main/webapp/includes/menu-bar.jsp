@@ -5,6 +5,7 @@
 <c:url value="/products" var="searchProduct"></c:url>
 <c:url value="/public" var="homeUrl"></c:url>
 <c:url value="/cart/checkout" var="myCartUrl"></c:url>
+<c:url value="/members/order" var="myOrderUrl"></c:url>
 
 <div class="navbar navbar-expand fixed-top navbar-dark bg-primary">
 	<form action="${searchProduct}" class="container">
@@ -26,7 +27,7 @@
 						<c:when test="${ login.role eq 'Owner' or login.role eq 'Sale' }">
 							<!-- Onwer Menu -->
 							<li class="nav-item">
-								<a  class="nav-link">
+								<a href="${myOrderUrl}" class="nav-link">
 									<i class="bi bi-cart3"></i> Orders 
 								</a>
 							</li>
@@ -75,11 +76,21 @@
 						
 						<c:when test="${ login.role eq 'Delivery' }">
 							<!-- Delivery Menu -->
+							<li class="nav-item">
+								<a href="${myOrderUrl}" class="nav-link">
+									<i class="bi bi-cart3"></i> Orders 
+								</a>
+							</li>
 						
 						</c:when>
 					
 						<c:when test="${ login.role eq 'Customer' }">
 							<!-- Customer Menu -->
+							<li class="nav-item">
+								<a href="${myOrderUrl}" class="nav-link">
+									<i class="bi bi-cart3"></i> Orders 
+								</a>
+							</li>
 							
 							<c:if test="${ not empty cart and cart.size gt 0 }">
 								<li class="nav-item">

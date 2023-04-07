@@ -19,7 +19,7 @@ public class OrderDeliveryService {
 	public OrderDeliveryVo findByOrderId(int id) {
 		var sql = """
 				select d.account_id, a.name delivery, a.phone, d.delivery_date date, 
-				d.time_from timeFrom, d.time_to timeTo where delivery d 
+				d.time_from timeFrom, d.time_to timeTo from delivery d 
 				join account a on d.account_id = a.id where d.purchase_id = ?""";
 
 		try (var conn = dataSource.getConnection(); 

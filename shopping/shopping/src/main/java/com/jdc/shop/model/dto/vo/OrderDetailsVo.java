@@ -15,4 +15,16 @@ public class OrderDetailsVo {
 	private List<OrderItemVo> items;
 	private List<OrderMessageVo> messages;
 	private List<OrderPaidVo> paids;
+	
+	public int getQuantity() {
+		return items.stream().mapToInt(OrderItemVo::getQuantity).sum();
+	}
+	
+	public int getTotal() {
+		return items.stream().mapToInt(OrderItemVo::getTotal).sum();
+	}
+	
+	public int getTotalPaid() {
+		return paids.stream().mapToInt(OrderPaidVo::getAmount).sum();
+	}
 }

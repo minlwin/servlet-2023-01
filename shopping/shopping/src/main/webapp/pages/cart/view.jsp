@@ -31,13 +31,13 @@
 			<div class="col-8">
 				<!-- Cart Contents -->
 				<div class="mb-4">
-					<app:cart-contents items="${cart.items}"></app:cart-contents>
+					<app:cart-contents items="${cart.items}" totalAmount="${cart.total}" totalQuantity="${cart.size}"></app:cart-contents>
 				</div>
 				
 				<!-- Paid History -->
 				<c:if test="${cart.totalPaid gt 0}">
 					<div class="mb-4">
-						<app:cart-paid-history items="${cart.paidInformations}"></app:cart-paid-history>
+						<app:cart-paid-history items="${cart.paidInformations}" total="${cart.totalPaid}"></app:cart-paid-history>
 					</div>				
 				</c:if>
 				

@@ -37,8 +37,8 @@ public class OrderService {
 	
 	private static final String LIST_QUERY_BASE = """
 			select p.id, p.purchase_date orderDate, p.status, p.account_id, 
-			p.remark, p.account_id customerId, a.name customerName, p.address_id  
-			sum(pi.quentity * pi.unit_price) totalAmount 
+			p.remark, p.account_id customerId, a.name customerName, p.address_id,  
+			sum(pi.quantity * pi.unit_price) totalAmount 
 			from purchase p join account a on p.account_id = a.id 
 			join purchase_item pi on p.id = pi.purchase_id""";
 	

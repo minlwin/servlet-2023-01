@@ -11,4 +11,12 @@ public class OrderItemVo {
 	private String image;
 	private int unitPrice;
 	private int quantity;
+	
+	public String getProductName() {
+		return product;
+	}
+	
+	public int getTotal() {
+		return unitPrice * quantity;
+	}
 }

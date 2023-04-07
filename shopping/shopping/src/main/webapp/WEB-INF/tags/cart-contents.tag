@@ -3,6 +3,8 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 
 <%@ attribute name="items" required="true" type="java.util.List" %>
+<%@ attribute name="totalQuantity" required="true" %>
+<%@ attribute name="totalAmount" required="true" %>
 
 <app:card>
 	<h4 class="card-title">
@@ -37,18 +39,8 @@
 		<tfoot>
 			<tr>
 				<td colspan="4" class="text-end">All Total</td>
-				<td class="text-end">${cart.size}</td>
-				<td class="text-end">${cart.total}</td>
-			</tr>
-			<tr>
-				<td colspan="4" class="text-end">Paid Total</td>
-				<td class="text-end"></td>
-				<td class="text-end">${cart.totalPaid}</td>
-			</tr>
-			<tr>
-				<td colspan="4" class="text-end">Remains</td>
-				<td class="text-end"></td>
-				<td class="text-end">${cart.remain}</td>
+				<td class="text-end">${totalQuantity}</td>
+				<td class="text-end">${totalAmount}</td>
 			</tr>
 		</tfoot>
 	</table>	
