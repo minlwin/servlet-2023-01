@@ -31,7 +31,7 @@
 			<div class="col-8">
 				<!-- Cart Contents -->
 				<div class="mb-4">
-					<app:cart-contents items="${cart.items}" totalAmount="${cart.total}" totalQuantity="${cart.size}"></app:cart-contents>
+					<app:cart-contents canEdit="${cart.totalPaid eq 0}" items="${cart.items}" totalAmount="${cart.total}" totalQuantity="${cart.size}"></app:cart-contents>
 				</div>
 				
 				<!-- Paid History -->

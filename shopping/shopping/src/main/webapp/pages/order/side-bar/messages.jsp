@@ -82,7 +82,7 @@
 		
 		<div class="modal-body">
 			<label class="form-label">Reason</label>
-			<textarea rows="3" cols="30" placeholder="Enter reason for cancel"></textarea>
+			<textarea name="remark" class="form-control" rows="3" cols="30" placeholder="Enter reason for cancel"></textarea>
 		</div>	
 		
 		<div class="modal-footer">

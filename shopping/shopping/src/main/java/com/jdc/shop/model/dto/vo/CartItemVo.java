@@ -14,6 +14,10 @@ public class CartItemVo implements Serializable{
 	private ProductDetailsVo product;
 	private int quantity;
 	
+	public int getProductId() {
+		return product.getProduct().getId();
+	}
+	
 	public String getProductName() {
 		return product.getProduct().getName();
 	}
@@ -39,5 +43,10 @@ public class CartItemVo implements Serializable{
 		super();
 		this.product = product;
 		this.quantity = 1;
+	}
+
+	public boolean removeOne() {
+		quantity --;
+		return quantity == 0;
 	}
 }

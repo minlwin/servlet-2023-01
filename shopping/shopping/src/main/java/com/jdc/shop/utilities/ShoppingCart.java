@@ -97,4 +97,12 @@ public class ShoppingCart implements Serializable{
 		paidInformations = new ArrayList<>();
 	}
 
+	public void removeItem(int productId) {
+
+		var item = items.get(productId);
+		if(item.removeOne()) {
+			items.remove(productId);
+		}
+	}
+
 }

@@ -5,6 +5,7 @@
 <%@ attribute name="items" required="true" type="java.util.List" %>
 <%@ attribute name="totalQuantity" required="true" %>
 <%@ attribute name="totalAmount" required="true" %>
+<%@ attribute name="canEdit" required="false" %>
 
 <app:card>
 	<h4 class="card-title">
@@ -30,7 +31,33 @@
 					<td>${item.productName}</td>
 					<td>${item.brand}</td>
 					<td class="text-end">${item.unitPrice}</td>
-					<td class="text-end">${item.quantity}</td>
+					<td class="text-end">
+						
+						<c:choose>
+							<c:when test="${not empty canEdit and canEdit}">
+								<c:url value="/cart/remove" var="removeOne">
+									<c:param name="id" value="${item.productId}"></c:param>
+								</c:url>
+								
+								<a href="${removeOne}" class="btn-link me-3">
+									<i class="bi bi-cart-dash"></i>
+								</a>
+								<span class="me-3">${item.quantity}</span>
+		
+								<c:url value="/cart/add" var="addOne">
+									<c:param name="cart" value="1"></c:param>
+									<c:param name="id" value="${item.productId}"></c:param>
+								</c:url>
+								<a href="${addOne}" class="btn-link">
+									<i class="bi bi-cart-plus"></i>
+								</a>
+							</c:when>
+							
+							<c:otherwise>
+								<span>${item.quantity}</span>
+							</c:otherwise>
+						</c:choose>
+					</td>
 					<td class="text-end">${item.total}</td>
 				</tr>
 			</c:forEach>
