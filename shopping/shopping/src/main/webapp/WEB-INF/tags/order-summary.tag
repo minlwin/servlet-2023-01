@@ -5,10 +5,6 @@
 <%@ attribute name="vo" required="true" type="com.jdc.shop.model.dto.vo.OrderListVo" %>
 
 <app:card>
-	<h4 class="card-title">
-		<i class="bi bi-info-circle"></i> Order Information
-	</h4>
-	
 	<div class="row">
 		<div class="col">
 			<label class="form-label"><i class="bi bi-person-circle"></i> Customer</label>

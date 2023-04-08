@@ -11,7 +11,7 @@ public class OrderDetailsVo {
 
 	private OrderListVo order;
 	private PurchaseAddressForm address;
-	private OrderDeliveryVo deilvery;
+	private OrderDeliveryVo delivery;
 	private List<OrderItemVo> items;
 	private List<OrderMessageVo> messages;
 	private List<OrderPaidVo> paids;

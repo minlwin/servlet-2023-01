@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.sql.DataSource;
 
 import com.jdc.shop.model.dto.vo.OrderDetailsVo;
 import com.jdc.shop.model.dto.vo.OrderListVo;
+import com.jdc.shop.utilities.DateTimes;
 import com.jdc.shop.utilities.LoginUser;
 import com.jdc.shop.utilities.Strings;
 
@@ -112,7 +114,7 @@ public class OrderService {
 				var addressId = rs.getInt("address_id");
 				result.setAddress(addressService.findAddressById(addressId));
 				result.setItems(itemService.findByOrderId(id));
-				result.setDeilvery(deliveryService.findByOrderId(id));
+				result.setDelivery(deliveryService.findByOrderId(id));;
 				result.setMessages(messageService.findByOrderId(id));
 				result.setPaids(paidService.findByOrderId(id));
 				return result;
@@ -133,6 +135,23 @@ public class OrderService {
 		vo.setTotalAmount(rs.getInt("totalAmount"));
 		vo.setRemark(rs.getString("remark"));
 		return vo;
+	}
+
+	public void updateStatus(int id, String status, String remark) {
+
+		var sql = "update purchase set status = ?, remark = ? where id = ?";
+
+		try (var conn = dataSource.getConnection(); 
+				var stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setString(1, status);
+			stmt.setString(2, status.equals("Cancel") ? remark : "Finished at %s.".formatted(DateTimes.format(LocalDateTime.now())));
+			stmt.setInt(3, id);
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	

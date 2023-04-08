@@ -27,7 +27,7 @@
 						<c:when test="${ login.role eq 'Owner' or login.role eq 'Sale' }">
 							<!-- Onwer Menu -->
 							<li class="nav-item">
-								<a href="${myOrderUrl}" class="nav-link">
+								<a href="${myOrderUrl}" class="nav-link ${ main eq 'order' ? 'active' : '' }" >
 									<i class="bi bi-cart3"></i> Orders 
 								</a>
 							</li>
@@ -77,7 +77,7 @@
 						<c:when test="${ login.role eq 'Delivery' }">
 							<!-- Delivery Menu -->
 							<li class="nav-item">
-								<a href="${myOrderUrl}" class="nav-link">
+								<a href="${myOrderUrl}" class="nav-link ${ main eq 'order' ? 'active' : '' }" >
 									<i class="bi bi-cart3"></i> Orders 
 								</a>
 							</li>
@@ -87,7 +87,7 @@
 						<c:when test="${ login.role eq 'Customer' }">
 							<!-- Customer Menu -->
 							<li class="nav-item">
-								<a href="${myOrderUrl}" class="nav-link">
+								<a href="${myOrderUrl}" class="nav-link ${ main eq 'order' ? 'active' : '' }" >
 									<i class="bi bi-cart3"></i> Orders 
 								</a>
 							</li>

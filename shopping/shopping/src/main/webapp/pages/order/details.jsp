@@ -42,17 +42,34 @@
 					<app:cart-paid-history items="${dto.paids}" total="${dto.totalPaid}"></app:cart-paid-history>
 				</div>
 				
-				<!-- Shipping Address -->
-				<div class="mb-3">
-					<app:cart-shipping address="${dto.address}"></app:cart-shipping>
+				<div class="mb-3 row">
+					<!-- Shipping Address -->
+					<div class="col">
+						<app:cart-shipping address="${dto.address}"></app:cart-shipping>
+					</div>
+					<!-- Delivery -->
+					<c:if test="${not empty dto.delivery}">
+						<div class="col">
+							<app:order-delivery vo="${dto.delivery}"></app:order-delivery>
+						</div>
+					</c:if>
 				</div>
 				
-				<!-- Delivery -->
 			</div>
 			
 			<div class="col-4">
-				<!-- Messages -->
-				<jsp:include page="side-bar/messages.jsp"></jsp:include>
+			
+				<c:choose>
+					<c:when test="${not empty deliveryProviders}">
+					<!-- Delivery -->					
+					<jsp:include page="side-bar/delivery.jsp"></jsp:include>
+					</c:when>
+					
+					<c:otherwise>
+					<!-- Messages -->
+					<jsp:include page="side-bar/messages.jsp"></jsp:include>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>		
 	</main>

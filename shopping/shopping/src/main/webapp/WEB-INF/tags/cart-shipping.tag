@@ -10,9 +10,9 @@
 	</h4>
 	
 	<p>
-		To ${address.name}<br/>
-		Phone : ${address.phone}<br />
-		${address.building}<br/>
+		<i class="bi bi-person-circle"></i> ${address.name}<br/>
+		<i class="bi bi-telephone"></i> ${address.phone}<br />
+		<i class="bi bi-map"></i> ${address.building}<br/>
 		${address.street}
 	</p>
 </app:card>
