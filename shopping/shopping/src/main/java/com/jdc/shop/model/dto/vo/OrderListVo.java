@@ -1,7 +1,8 @@
 package com.jdc.shop.model.dto.vo;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import com.jdc.shop.utilities.DateTimes;
 
 import lombok.Data;
 
@@ -17,6 +18,6 @@ public class OrderListVo {
 	private int totalAmount;
 	
 	public String getDateTime() {
-		return orderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+		return DateTimes.format(orderDate);
 	}
 }

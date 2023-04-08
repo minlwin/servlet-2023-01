@@ -2,6 +2,7 @@ package com.jdc.shop.controller;
 
 import java.io.IOException;
 
+import com.jdc.shop.model.service.OrderMessageService;
 import com.jdc.shop.model.service.OrderService;
 import com.jdc.shop.utilities.Integers;
 import com.jdc.shop.utilities.LoginUser;
@@ -11,16 +12,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = "/members/order", loadOnStartup = 1)
+@WebServlet(urlPatterns = {
+		"/members/order",
+		"/members/order/delivery",
+		"/members/order/message"
+}, loadOnStartup = 1)
 public class MemberOrderController extends AbstractController{
 
 	private static final long serialVersionUID = 1L;
 	
 	private OrderService orderService;
+	private OrderMessageService messageService;
 	
 	@Override
 	public void init() throws ServletException {
 		orderService = new OrderService(dataSource);
+		messageService = new OrderMessageService(dataSource);
 	}
 
 	@Override
@@ -34,6 +41,20 @@ public class MemberOrderController extends AbstractController{
 		
 		// Search
 		searchOrders(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		var id = Integers.parse(req.getParameter("id"));
+		
+		if("/members/order/delivery".equals(req.getServletPath())) {
+			requestDelivery(req, resp, id);
+		} else {
+			addMessage(req, resp, id);
+		}
+		
+		redirect(resp, "/members/order?id=%s".formatted(id));
 	}
 
 	private void searchOrders(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,5 +75,14 @@ public class MemberOrderController extends AbstractController{
 		forward(req, resp, "order/details");
 	}
 	
+	private void addMessage(HttpServletRequest req, HttpServletResponse resp, int id) {
+		var login = (LoginUser)req.getSession().getAttribute("login");
+		var message = req.getParameter("message");
+		messageService.send(id, login.getId(), message);
+	}
+
+	private void requestDelivery(HttpServletRequest req, HttpServletResponse resp, int id) {
+
+	}
 	
 }

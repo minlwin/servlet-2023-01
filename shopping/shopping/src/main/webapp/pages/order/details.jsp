@@ -28,6 +28,9 @@
 		<div class="row">
 			<div class="col-8">
 				<!-- Order Summary -->
+				<div class="mb-3">
+					<app:order-summary vo="${dto.order}"></app:order-summary>
+				</div>
 				
 				<!-- Order Items -->
 				<div class="mb-3">
@@ -49,7 +52,7 @@
 			
 			<div class="col-4">
 				<!-- Messages -->
-				
+				<jsp:include page="side-bar/messages.jsp"></jsp:include>
 			</div>
 		</div>		
 	</main>

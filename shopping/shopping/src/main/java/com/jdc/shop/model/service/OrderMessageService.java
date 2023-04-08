@@ -2,6 +2,8 @@ package com.jdc.shop.model.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class OrderMessageService {
 			select m.id, m.send_date sendAt, m.message, 
 			m.account_id senderId, a.name sender, a.role 
 			from message m join account a on m.account_id = a.id 
-			where m.purchase_id = ?""";
+			where m.purchase_id = ? order by m.send_date""";
 
 		try (var conn = dataSource.getConnection(); 
 				var stmt = conn.prepareStatement(sql)) {
@@ -52,6 +54,25 @@ public class OrderMessageService {
 		vo.setSenderId(rs.getInt("senderId"));
 		vo.setSendAt(rs.getTimestamp("sendAt").toLocalDateTime());
 		return vo;
+	}
+
+	public void send(int purchaseId, int senderId, String message) {
+		
+		var sql = "insert into message(send_date, purchase_id, account_id, message) values (?, ?, ?, ?)";
+
+		try (var conn = dataSource.getConnection(); 
+				var stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+			stmt.setInt(2, purchaseId);
+			stmt.setInt(3, senderId);
+			stmt.setString(4, message);
+			
+			stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
