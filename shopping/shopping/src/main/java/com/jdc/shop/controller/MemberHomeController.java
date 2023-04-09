@@ -3,9 +3,12 @@ package com.jdc.shop.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import com.jdc.shop.model.dto.form.AccountForm;
+import com.jdc.shop.model.dto.form.PurchaseAddressForm;
 import com.jdc.shop.model.service.AccountService;
 import com.jdc.shop.model.service.AddressService;
 import com.jdc.shop.model.service.OrderService;
+import com.jdc.shop.utilities.Integers;
 import com.jdc.shop.utilities.LoginUser;
 
 import jakarta.servlet.ServletException;
@@ -72,13 +75,27 @@ public class MemberHomeController extends AbstractController{
 	}
 
 	private void editAddress(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+		var form = new PurchaseAddressForm();
+		form.setId(Integers.parse(req.getParameter("id")));
+		form.setName(req.getParameter("name"));
+		form.setPhone(req.getParameter("phone"));
+		form.setBuilding(req.getParameter("building"));
+		form.setStreet(req.getParameter("street"));
 		
+		var login = (LoginUser)req.getSession().getAttribute("login");
+		addressService.save(login.getId(), form);
 	}
 
 	private void editProfile(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+		var login = (LoginUser)req.getSession().getAttribute("login");
 		
+		var form = new AccountForm();
+		form.setId(login.getId());
+		form.setRole(login.getRole());
+		form.setName(req.getParameter("name"));
+		form.setPhone(req.getParameter("phone"));
+		
+		accountService.save(form);
 	}
 
 	private void changePassword(HttpServletRequest req, HttpServletResponse resp) {

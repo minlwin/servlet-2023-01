@@ -36,7 +36,7 @@ public class CheckOutService {
 			var addressId = cart.getAddress().getId();
 			
 			if(addressId == 0) {
-				addressId = addressService.create(customerId, cart.getAddress());
+				addressId = addressService.save(customerId, cart.getAddress());
 			}
 
 			// Create Purchase

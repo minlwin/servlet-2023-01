@@ -36,6 +36,33 @@
 	</app:card>
 	
 	<app:modal-dialog modelId="profileEditDialog">
+	<c:url value="/members/profile" var="profileUpdateAction"></c:url>
+	<form action="${profileUpdateAction}" method="post">
+		
+		<div class="modal-header">
+			<h4>Edit Profile</h4>
+		</div>
+		
+		<div class="modal-body">
+			<input type="hidden" id="idInput" />		
+
+			<div class="mb-3">
+				<label class="form-label">Name</label>
+				<input id="nameInput" name="name" value="${member.name}" class="form-control" placeholder="Enter Name" required="required" />
+			</div>
 	
+			<div class="mb-3">
+				<label class="form-label">Phone</label>
+				<input id="phoneInput" name="phone" value="${member.phone}" class="form-control" placeholder="Enter Phone" required="required" />
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+			<button class="btn btn-primary">
+				<i class="bi bi-save"></i> Save
+			</button>
+		</div>	
+			
+	</form>		
 	</app:modal-dialog>
 </section>

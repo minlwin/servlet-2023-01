@@ -68,8 +68,35 @@ public class AddressService {
 		return dto;
 	}
 
-	public int create(int customerId, PurchaseAddressForm address) {
+	public int save(int customerId, PurchaseAddressForm address) {
 		
+		if(address.getId() == 0) {
+			return create(customerId, address);
+		}
+		
+		var sql = "update address set account_id = ?, name = ?, phone = ?, building = ?, street = ? where id = ?";
+
+		try (var conn = dataSource.getConnection(); 
+				var stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setInt(1, customerId);
+			stmt.setString(2, address.getName());
+			stmt.setString(3, address.getPhone());
+			stmt.setString(4, address.getBuilding());
+			stmt.setString(5, address.getStreet());
+			stmt.setInt(6, address.getId());
+			
+			stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return address.getId();
+	}
+
+	private int create(int customerId, PurchaseAddressForm address) {
+
 		var sql = "insert into address (account_id, name, phone, building, street) values (?, ?, ?, ?, ?)";
 
 		try (var conn = dataSource.getConnection(); 

@@ -26,7 +26,8 @@
 							<td>${item.phone}</td>
 							<td>${item.building}, ${item.street}</td>
 							<td>
-								<a class="btn-link addressEditLink">
+								<a data-id="${item.id}" data-name="${item.name}" data-phone="${item.phone}" 
+									data-building="${item.building}" data-street="${item.street}" class="btn-link addressEditLink">
 									<i class="bi bi-pencil"></i>
 								</a>
 							</td>
@@ -45,6 +46,44 @@
 	</app:card>
 	
 	<app:modal-dialog modelId="addressEditDialog">
+	<c:url value="/members/address" var="addressUpdateAction"></c:url>
+	<form action="${addressUpdateAction}" method="post">
 		
+		<div class="modal-header">
+			<h4>Shipping Address</h4>
+		</div>
+		
+		<div class="modal-body">
+			<input type="hidden" name="id" id="idInput" />		
+
+			<div class="mb-3">
+				<label class="form-label">Name</label>
+				<input id="nameInput" name="name" class="form-control" placeholder="Enter Name" required="required" />
+			</div>
+	
+			<div class="mb-3">
+				<label class="form-label">Phone</label>
+				<input id="phoneInput" name="phone" class="form-control" placeholder="Enter Phone" required="required" />
+			</div>
+		
+			<div class="mb-3">
+				<label class="form-label">Building</label>
+				<input id="buildingInput" name="building" class="form-control" placeholder="Enter Building" required="required" />
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label">Street &amp; Township</label>
+				<input id="streetInput" name="street" class="form-control" placeholder="Enter Street & Township" required="required" />
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+			<button class="btn btn-primary">
+				<i class="bi bi-save"></i> Save
+			</button>
+		</div>	
+			
+	</form>	
 	</app:modal-dialog>
+
 </section>
