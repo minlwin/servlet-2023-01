@@ -10,7 +10,7 @@
 			<th>Date</th>
 			<th>Status</th>
 			<th>Customer</th>
-			<th>Total Amount</th>
+			<th class="text-end">Total</th>
 			<th>Remark</th>
 			<th></th>
 		</tr>
@@ -22,7 +22,7 @@
 			<td>${item.dateTime}</td>
 			<td>${item.status}</td>
 			<td>${item.customerName}</td>
-			<td>${item.totalAmount}</td>
+			<td class="text-end">${item.totalAmount}</td>
 			<td>${item.remark}</td>
 			<td>
 				<c:url value="/members/order" var="showDetailsUrl">

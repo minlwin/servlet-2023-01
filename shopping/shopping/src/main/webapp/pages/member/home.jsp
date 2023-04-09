@@ -26,6 +26,11 @@
 		<div class="row">
 		
 			<div class="col-9">
+				<!-- Sales Summary -->
+				<c:if test="${login.role eq 'Sale' or login.role eq 'Owner'}">
+					<jsp:include page="include/sales-summary.jsp"></jsp:include>
+				</c:if>
+			
 				<!-- Resent Orders -->
 				<div class="mb-3">
 					<jsp:include page="include/orders.jsp"></jsp:include>

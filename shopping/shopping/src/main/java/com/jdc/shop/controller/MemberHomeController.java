@@ -8,6 +8,7 @@ import com.jdc.shop.model.dto.form.PurchaseAddressForm;
 import com.jdc.shop.model.service.AccountService;
 import com.jdc.shop.model.service.AddressService;
 import com.jdc.shop.model.service.OrderService;
+import com.jdc.shop.model.service.SaleSummaryService;
 import com.jdc.shop.utilities.Integers;
 import com.jdc.shop.utilities.LoginUser;
 
@@ -32,12 +33,14 @@ public class MemberHomeController extends AbstractController{
 	private AccountService accountService;
 	private AddressService addressService;
 	private OrderService orderService;
+	private SaleSummaryService summaryService;
 	
 	@Override
 	public void init() throws ServletException {
 		accountService = new AccountService(dataSource);
 		addressService = new AddressService(dataSource);
 		orderService = new OrderService(dataSource);
+		summaryService = new SaleSummaryService(dataSource);
 	}
 
 	@Override
@@ -55,6 +58,11 @@ public class MemberHomeController extends AbstractController{
 		if(login.getRole().equals("Customer")) {
 			var addresses = addressService.findAddressForCustomer(login.getId());
 			req.setAttribute("addresses", addresses);
+		}
+		
+		if(login.getRole().equals("Sale") || login.getRole().equals("Owner")) {
+			var summary = summaryService.getSaleSummary();
+			req.setAttribute("summary", summary);
 		}
 		
 		forward(req, resp, "member/home");
