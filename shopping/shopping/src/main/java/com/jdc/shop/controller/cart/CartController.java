@@ -40,6 +40,7 @@ public class CartController extends AbstractController{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("main", "cart");
 		if("/cart/add".equals(req.getServletPath())) {
 			addToCart(req, resp);
 		} else if("/cart/remove".equals(req.getServletPath())) {

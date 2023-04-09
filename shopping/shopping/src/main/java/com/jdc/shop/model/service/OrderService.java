@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class OrderService {
 			group by p.id, p.purchase_date, p.status, p.account_id, 
 			p.remark, p.account_id, a.name, p.address_id""";
 	
-	public List<OrderListVo> search(LoginUser login, String status, String dateFrom) {
+	public List<OrderListVo> search(LoginUser login, String status, LocalDate dateFrom) {
 		
 		var sqlByRole = switch (login.getRole()) {
 		case "Customer" -> "%s where p.account_id = ?";
@@ -69,10 +68,9 @@ public class OrderService {
 			params.add(status);
 		}
 		
-		if(Strings.isNotBlanck(dateFrom)) {
+		if(null != dateFrom) {
 			sql.append(" and p.purchase_date >= ?");
-			var date = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			params.add(Date.valueOf(date));
+			params.add(Date.valueOf(dateFrom));
 		}
 		
 		sql.append(" %s".formatted(LIST_QUERY_GROUP_BY));

@@ -29,6 +29,8 @@ public class ShippingController extends AbstractController{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		req.setAttribute("main", "cart");
+
 		LoginUser login = (LoginUser) req.getSession().getAttribute("login");
 		req.setAttribute("addresses", service.findAddressForCustomer(login.getId()));
 		

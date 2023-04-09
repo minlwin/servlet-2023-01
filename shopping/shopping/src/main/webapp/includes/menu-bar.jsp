@@ -94,7 +94,7 @@
 							
 							<c:if test="${ not empty cart and cart.size gt 0 }">
 								<li class="nav-item">
-									<a href="${myCartUrl}" class="nav-link">
+									<a href="${myCartUrl}" class="nav-link ${ main eq 'cart' ? 'active' : '' }">
 										<i class="bi bi-cart4"></i> My Cart ${cart.size}
 									</a>
 								</li>
@@ -102,19 +102,41 @@
 						</c:when>
 					
 					</c:choose>
-
-					<li class="nav-item">
-						<a id="signOutMenu" class="nav-link">
-							<i class="bi bi-door-closed"></i> Sign Out
+					
+					<li class="nav-item dropdown">
+						<a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle  ${ main eq 'home' ? 'active' : '' }">
+							<i class="bi bi-gear"></i> ${login.name}
 						</a>
+						
+						<ul class="dropdown-menu">
+							<li>
+								<c:url value="/members" var="memberHome"></c:url>
+								<a href="${memberHome}" class="dropdown-item ${ main eq 'home' ? 'active' : '' }">
+									<i class="bi bi-person-circle"></i> Profile
+								</a>
+							</li>
+							<li>
+								<a id="changePassMenu" class="dropdown-item">
+									<i class="bi bi-lock"></i> Change Password
+								</a>
+							</li>
+							<li>
+								<a id="signOutMenu" class="dropdown-item">
+									<i class="bi bi-door-closed"></i> Sign Out
+								</a>
+							</li>
+							
+						</ul>
 					</li>
+
+
 				</c:when>
 				
 				<c:otherwise>
 					<!-- Anonymous Menu -->
 					<c:if test="${ not empty cart and cart.size gt 0 }">
 						<li class="nav-item">
-							<a href="${myCartUrl}" class="nav-link">
+							<a href="${myCartUrl}" class="nav-link ${ main eq 'cart' ? 'active' : '' }">
 								<i class="bi bi-cart4"></i> My Cart ${cart.size}
 							</a>
 						</li>
@@ -146,10 +168,17 @@
 	</c:when>
 	
 	<c:otherwise>
+		
+		<jsp:include page="/dialogs/change-pass.jsp"></jsp:include>
+	
 		<c:url value="/sign-out" var="signOutAction"></c:url>
 		<form id="signOutForm" method="post" action="${ signOutAction }" class="d-none"></form>
 	</c:otherwise>
 </c:choose>
+
+<c:if test="${not empty param.error}">
+	<jsp:include page="/dialogs/error-dialog.jsp"></jsp:include>
+</c:if>
 
 <c:url value="/resources/js/menu.js" var="menuJs"></c:url>
 <script type="text/javascript" src="${ menuJs }"></script>

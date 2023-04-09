@@ -44,6 +44,7 @@
 				<div class="col">
 					<app:cover-info icon="bi-emoji-smile">
 						<h2>Be Happy!</h2>
+						<p>Happy and healthy life is the best.</p>
 					</app:cover-info>
 				</div>
 			</section>

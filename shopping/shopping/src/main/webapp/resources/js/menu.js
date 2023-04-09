@@ -1,30 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
 	
-	let signInMenus = Array.from(document.getElementsByClassName('signInMenu'))
+	const signInMenus = Array.from(document.getElementsByClassName('signInMenu'))
 	signInMenus.forEach(menu => {
 		menu.addEventListener('click', () => {
-			let dialog = new bootstrap.Modal('#signInForm')
+			const dialog = new bootstrap.Modal('#signInForm')
 			dialog.show()
 		})
 	})
 		
-	let signUpMenus = Array.from(document.getElementsByClassName('signUpMenu'))
+	const signUpMenus = Array.from(document.getElementsByClassName('signUpMenu'))
 	signUpMenus.forEach(menu => {
 		menu.addEventListener('click', () => {
-			let dialog = new bootstrap.Modal('#signUpForm')
+			const dialog = new bootstrap.Modal('#signUpForm')
 			dialog.show()
 		})
 	})
 	
-	let signOutMenu = document.getElementById('signOutMenu')
+	const signOutMenu = document.getElementById('signOutMenu')
 	
 	if(signOutMenu) {
 		
 		signOutMenu.addEventListener('click', () => {
-			let signOutForm = document.getElementById('signOutForm')
+			const signOutForm = document.getElementById('signOutForm')
 			if(signOutForm) {
 				signOutForm.submit()
 			}			
 		})
+	}
+	
+	const changePassMenu = document.getElementById('changePassMenu')
+	const changePassDialog = document.getElementById('changePassDialog')
+	
+	if(changePassMenu && changePassDialog) {
+		changePassMenu.addEventListener('click', () => {
+			const dialog = new bootstrap.Modal(changePassDialog)
+			dialog.show()
+		})
+	}
+	
+	const errorDialog = document.getElementById('errorDialog')
+	
+	if(errorDialog) {
+		const dialog = new bootstrap.Modal(errorDialog)
+		dialog.show()
 	}
 })

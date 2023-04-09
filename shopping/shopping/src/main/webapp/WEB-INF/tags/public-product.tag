@@ -8,7 +8,7 @@
 	<img src="${coverUrl}" alt="Cover Image" class="card-image-top image-responsive public-product-image" />
 	
 	<div class="card-footer">
-		<h5 class="card-title">
+		<h5 class="card-title text-truncate">
 			${dto.product.name}
 		</h5>
 		<div class="d-flex justify-content-between">

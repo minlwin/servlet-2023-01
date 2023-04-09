@@ -75,7 +75,7 @@ public class MemberOrderController extends AbstractController{
 		var status = req.getParameter("status");
 		var dateFrom = req.getParameter("from");
 		
-		var list = orderService.search(login, status, dateFrom);
+		var list = orderService.search(login, status, DateTimes.parseDate(dateFrom));
 		req.setAttribute("list", list);
 		
 		forward(req, resp, "order/list");

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.jdc.shop.model.dto.form.AccountForm;
+import com.jdc.shop.utilities.BusinessException;
 import com.jdc.shop.utilities.LoginUser;
 import com.jdc.shop.utilities.Strings;
 
@@ -183,6 +184,24 @@ public class AccountService {
 		form.setRole("Customer");
 		
 		create(form, password);
+	}
+
+	public void changePassword(int id, String oldPass, String newPass) {
+		var sql = "update account set password = ? where id = ? and password = ?";
+
+		try (var conn = dataSource.getConnection(); var stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setString(1, newPass);
+			stmt.setInt(2, id);
+			stmt.setString(3, oldPass);
+			
+			if(stmt.executeUpdate() == 0) {
+				throw new BusinessException("Please check your old password.");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

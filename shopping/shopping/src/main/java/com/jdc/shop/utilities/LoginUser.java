@@ -15,5 +15,9 @@ public class LoginUser implements Serializable {
 	private String role;
 	private String loginId;
 	private LocalDateTime loginTime;
+	
+	public String getLoginDateTime() {
+		return DateTimes.format(loginTime);
+	}
 
 }
