@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>    
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>   
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +26,11 @@
 		<h3 class="mb-3"><i class="bi bi-gift"></i> Products Management</h3>
 		
 		<!-- Search Box -->
-		<form class="row mb-3">
+		<form id="adminProductSearch" class="row mb-3">
+		
+			<input type="hidden" id="adminProductSearchPageInput" name="page" value="${model.currentPage}" />
+			<input type="hidden" id="adminProductSearchSizeInput" name="size" value="${model.pageSize}" />
+			
 			<div class="col-3">
 				<label class="form-label">Category</label>
 				<input type="text" name="category" class="form-control" placeholder="Search Category" />
@@ -48,7 +54,7 @@
 		</form>
 		
 		<!-- Member Tables -->	
-		<c:if test="${not empty list}">
+		<c:if test="${not empty model.list}">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -64,7 +70,7 @@
 				
 				<tbody>
 				
-					<c:forEach var="item" items="${list}">
+					<c:forEach var="item" items="${model.list}">
 					
 					<tr>
 						<td>${item.product.id}</td>
@@ -89,9 +95,12 @@
 					
 				</tbody>
 			</table>
+			
+			<app:pagination formId="adminProductSearch" pageSizeList="${pageSizes}" dataModel="${model}"></app:pagination>
+			
 		</c:if>
 		
-		<c:if test="${empty list}">
+		<c:if test="${empty model.list}">
 			<jsp:include page="/includes/no-data.jsp">
 				<jsp:param name="data" value="product"/>
 			</jsp:include>

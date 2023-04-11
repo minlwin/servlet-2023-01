@@ -2,8 +2,10 @@ package com.jdc.shop.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.jdc.shop.model.dto.form.ProductForm;
+import com.jdc.shop.model.dto.page.PaginationPageResultAdapter;
 import com.jdc.shop.model.service.CategoryService;
 import com.jdc.shop.model.service.ProductPhotoService;
 import com.jdc.shop.model.service.ProductService;
@@ -33,6 +35,8 @@ public class SaleProductController extends AbstractController {
 	private ProductService service;
 	private CategoryService categories;
 	private ProductPhotoService photoService;
+	
+	private static List<Integer> PAGE_SIZES = List.of(5, 10, 15);
 	
 	@Override
 	public void init() throws ServletException {
@@ -67,9 +71,26 @@ public class SaleProductController extends AbstractController {
 			yield "details";
 		}
 		default -> {
+			var currentPage = Integers.parse(req.getParameter("page"));
+			
+			if(currentPage == 0) {
+				currentPage = 1;
+			}
+			
+			var pageSize = Integers.parse(req.getParameter("size"));
+			
+			if(pageSize == 0) {
+				pageSize = PAGE_SIZES.get(0);
+			}
+			
 			var category = req.getParameter("category");
 			var keyword = req.getParameter("keyword");
-			req.setAttribute("list", service.searchForAdmin(category, keyword));
+			
+			req.setAttribute("pageSizes", PAGE_SIZES);
+			var result = service.searchForAdmin(category, keyword, currentPage, pageSize);
+			var model = new PaginationPageResultAdapter<>(result);
+			req.setAttribute("model", model);
+			
 			yield "list";
 		}
 		};

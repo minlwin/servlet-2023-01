@@ -9,6 +9,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.jdc.shop.model.dto.form.ProductForm;
+import com.jdc.shop.model.dto.page.PageResult;
 import com.jdc.shop.model.dto.vo.ProductDetailsVo;
 import com.jdc.shop.model.dto.vo.ProductListVo;
 import com.jdc.shop.model.dto.vo.ProductPublicVo;
@@ -25,6 +26,12 @@ public class ProductService {
 	private static final String SELECT_PRODUCT  = """
 			select distinct p.id, p.name, p.price, p.brand, p.description, p.sold_out  
 			from product p 
+			join product_category pc on p.id = pc.product_id 
+			join category c on pc.category_id = c.id 
+			where 1 = 1""";
+
+	private static final String COUNT_PRODUCT  = """
+			select count(distinct(p.id)) from product p 
 			join product_category pc on p.id = pc.product_id 
 			join category c on pc.category_id = c.id 
 			where 1 = 1""";
@@ -46,26 +53,61 @@ public class ProductService {
 		return result;
 	}
 
-	public List<ProductListVo> searchForAdmin(String category, String keyword) {
+	public PageResult<ProductListVo> searchForAdmin(String category, String keyword, int page, int size) {
 		
 		List<ProductListVo> list = new ArrayList<>();
+		
+		var result = new PageResult<ProductListVo>();
+		result.setList(list);
+		result.setCurrentPage(page);
+		result.setPageSize(size);
 		
 		var sql = new StringBuffer(SELECT_PRODUCT);
 		var params = new ArrayList<>();
 		
+		var count = new StringBuffer(COUNT_PRODUCT);
+		var countParams = new ArrayList<>();
+		
 		if(Strings.isNotBlanck(category)) {
 			sql.append(" and lower(c.name) like ?");
+			count.append(" and lower(c.name) like ?");
+			
 			params.add(category.toLowerCase().concat("%"));
+			countParams.add(category.toLowerCase().concat("%"));
 		}
 		
 		if(Strings.isNotBlanck(keyword)) {
 			sql.append(" and (lower(p.name) like ? or lower(p.brand) like ?)");
+			count.append(" and (lower(p.name) like ? or lower(p.brand) like ?)");
+
 			params.add(keyword.toLowerCase().concat("%"));
 			params.add(keyword.toLowerCase().concat("%"));
+
+			countParams.add(keyword.toLowerCase().concat("%"));
+			countParams.add(keyword.toLowerCase().concat("%"));
+		}
+		
+		if(page > 0 && size > 0) {
+			sql.append(" limit ?, ?");
+			params.add((page -1) * size);
+			params.add(size);
 		}
  
 		try (var conn = dataSource.getConnection(); 
+				var countStmt = conn.prepareStatement(count.toString());
 				var stmt = conn.prepareStatement(sql.toString())) {
+			
+			for(var i = 0; i < countParams.size(); i ++) {
+				countStmt.setObject(i + 1, countParams.get(i));
+			}
+			
+			var countRs = countStmt.executeQuery();
+			
+			while(countRs.next()) {
+				result.setTotalCount(countRs.getLong(1));
+				break;
+			}
+
 			
 			for(var i = 0; i < params.size(); i ++) {
 				stmt.setObject(i + 1, params.get(i));
@@ -84,7 +126,9 @@ public class ProductService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return list;
+		
+		
+		return result;
 	}
 	
 
