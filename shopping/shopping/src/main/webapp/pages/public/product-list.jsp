@@ -28,17 +28,21 @@
 		
 
 		<!-- Grid -->
-		<c:if test="${not empty list}">
+		<c:if test="${not empty model.list}">
 			<div class="row row-cols-4 g-4 mt-2">
-				<c:forEach items="${list}" var="item">
+				<c:forEach items="${model.list}" var="item">
 					<div class="col">
 						<app:public-product dto="${item}"></app:public-product>
 					</div>
 				</c:forEach>
 			</div>
+			
+			<div class="mt-3">
+				<app:pagination pageSizeList="${pageSizes}" dataModel="${model}" formId="publicSearch"></app:pagination>
+			</div>
 		</c:if>
 
-		<c:if test="${empty list}">
+		<c:if test="${empty model.list}">
 			<jsp:include page="/includes/no-data.jsp">
 				<jsp:param name="data" value="category"/>
 			</jsp:include>

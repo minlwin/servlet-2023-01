@@ -8,7 +8,11 @@
 <c:url value="/members/order" var="myOrderUrl"></c:url>
 
 <div class="navbar navbar-expand fixed-top navbar-dark bg-primary">
-	<form action="${searchProduct}" class="container">
+	<form id="publicSearch" action="${searchProduct}" class="container">
+		
+		<input type="hidden" id="publicSearchPageInput" name="page" value="${model.currentPage}" />
+		<input type="hidden" id="publicSearchSizeInput" name="size" value="${model.pageSize}" />
+	
 		<a href="${homeUrl}" class="navbar-brand"><i class="bi bi-shop"></i> Easy Shopping</a>
 	
 		<ul class="navbar-nav">

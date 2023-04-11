@@ -237,18 +237,51 @@ public class ProductService {
 		}
 	}
 
-	public List<ProductPublicVo> search(String keyword) {
-		var result = new ArrayList<ProductPublicVo>();
+	public PageResult<ProductPublicVo> search(String keyword, int page, int size) {
+		var list = new ArrayList<ProductPublicVo>();
+		var result = new PageResult<ProductPublicVo>();
+		
+		result.setList(list);
+		result.setCurrentPage(page);
+		result.setPageSize(size);
+		
 		var sql = new StringBuffer(SELECT_PRODUCT);
 		var params = new ArrayList<>();
+
+		var count = new StringBuffer(COUNT_PRODUCT);
+		var countParams = new ArrayList<>();
 
 		if(Strings.isNotBlanck(keyword)) {
 			sql.append(" and (lower(p.name) like ? or lower(p.brand) like ?)");
 			params.add(keyword.toLowerCase().concat("%"));
 			params.add(keyword.toLowerCase().concat("%"));
+
+			count.append(" and (lower(p.name) like ? or lower(p.brand) like ?)");
+			countParams.add(keyword.toLowerCase().concat("%"));
+			countParams.add(keyword.toLowerCase().concat("%"));
 		}
+		
+		if(page > 0 && size > 0) {
+			sql.append(" limit ?, ?");
+			params.add((page -1) * size);
+			params.add(size);
+		}
+		
 		try (var conn = dataSource.getConnection(); 
+				var countStmt = conn.prepareStatement(count.toString());
 				var stmt = conn.prepareStatement(sql.toString())) {
+
+			for(var i = 0; i < countParams.size(); i ++) {
+				countStmt.setObject(i + 1, countParams.get(i));
+			}
+			
+			var countRs = countStmt.executeQuery();
+			
+			while(countRs.next()) {
+				result.setTotalCount(countRs.getLong(1));
+				break;
+			}
+			
 			
 			for(var i = 0; i < params.size(); i ++) {
 				stmt.setObject(i + 1, params.get(i));
@@ -261,7 +294,7 @@ public class ProductService {
 				vo.setProduct(getVoData(rs));
 				vo.setCategories(categories.findCategoriesByProduct(vo.getProduct().getId()));
 				vo.setPhotos(photos.findPhotoByProduct(vo.getProduct().getId()));
-				result.add(vo);
+				list.add(vo);
 			}
 
 		} catch (SQLException e) {
