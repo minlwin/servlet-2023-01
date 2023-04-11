@@ -19,7 +19,7 @@
 			<li class="nav-item d-flex me-4">
 				<div class="input-group">
 					<input name="keyword" type="text" class="form-control" placeholder="Search Keyword" />
-					<button type="submit" class="input-group-text">
+					<button d="publicSearchBtn" class="input-group-text">
 						<i class="bi bi-search"></i>
 					</button>
 				</div>

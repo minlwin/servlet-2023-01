@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>    
+<%@ taglib prefix="c" uri="jakarta.tags.core" %> 
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +26,11 @@
 		<h3 class="mb-3"><i class="bi bi-people"></i> Members Management</h3>
 		
 		<!-- Search Box -->
-		<form class="row mb-3">
+		<form id="memberSearch" class="row mb-3">
+
+			<input type="hidden" id="memberSearchPageInput" name="page" value="${model.currentPage}" />
+			<input type="hidden" id="memberSearchSizeInput" name="size" value="${model.pageSize}" />
+
 			<div class="col-auto">
 				<label class="form-label">Search Role</label>
 				<select name="role" class="form-select">
@@ -42,7 +48,7 @@
 			</div>
 			
 			<div class="col btn-wrapper">
-				<button class="btn btn-outline-primary me-2" type="submit">
+				<button id="memberSearchBtn" class="btn btn-outline-primary me-2" type="button">
 					<i class="bi bi-search"></i> Search
 				</button>
 				
@@ -54,7 +60,7 @@
 		</form>
 		
 		<!-- Member Tables -->	
-		<c:if test="${not empty list}">
+		<c:if test="${not empty model.list}">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -69,7 +75,7 @@
 			
 			<tbody>
 			
-				<c:forEach var="item" items="${list}">
+				<c:forEach var="item" items="${model.list}">
 				
 				<tr>
 					<td>${item.id}</td>
@@ -91,9 +97,11 @@
 				
 			</tbody>
 		</table>
+		
+		<app:pagination pageSizeList="${pageSizes}" dataModel="${model}" formId="memberSearch"></app:pagination>
 		</c:if>
 		
-		<c:if test="${empty list}">
+		<c:if test="${empty model.list}">
 		<jsp:include page="/includes/no-data.jsp">
 			<jsp:param name="data" value="member"/>
 		</jsp:include>

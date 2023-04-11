@@ -25,7 +25,10 @@
 		<h3 class="mb-3"><i class="bi bi-cart-check"></i> Orders</h3>
 		
 		<!-- Search Bar -->
-		<form class="row mb-4">
+		<form id="orderSearch" class="row mb-4">
+			<input type="hidden" id="orderSearchPageInput" name="page" value="${model.currentPage}" />
+			<input type="hidden" id="orderSearchSizeInput" name="size" value="${model.pageSize}" />
+
 			<div class="col-auto">
 				<label class="form-label">Status</label>
 				<select name="status" class="form-select">
@@ -43,7 +46,7 @@
 			</div>
 			
 			<div class="col btn-wrapper">
-				<button class="btn btn-outline-primary">
+				<button type="button" id="orderSearchBtn" class="btn btn-outline-primary">
 					<i class="bi bi-search"></i> Search
 				</button>
 			</div>
@@ -51,8 +54,10 @@
 		
 		<!-- Result List -->
 		<c:choose>
-			<c:when test="${not empty list}">
-			<app:orders-table list="${list}"></app:orders-table>
+			<c:when test="${not empty model.list}">
+				<app:orders-table list="${model.list}"></app:orders-table>
+				
+				<app:pagination pageSizeList="${pageSizes}" dataModel="${model}" formId="orderSearch"></app:pagination>
 			</c:when>
 			
 			<c:otherwise>

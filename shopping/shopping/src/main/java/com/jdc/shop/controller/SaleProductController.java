@@ -82,11 +82,11 @@ public class SaleProductController extends AbstractController {
 			if(pageSize == 0) {
 				pageSize = PAGE_SIZES.get(0);
 			}
+			req.setAttribute("pageSizes", PAGE_SIZES);
 			
 			var category = req.getParameter("category");
 			var keyword = req.getParameter("keyword");
 			
-			req.setAttribute("pageSizes", PAGE_SIZES);
 			var result = service.searchForAdmin(category, keyword, currentPage, pageSize);
 			var model = new PaginationPageResultAdapter<>(result);
 			req.setAttribute("model", model);

@@ -1,8 +1,10 @@
 package com.jdc.shop.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.jdc.shop.model.dto.form.AccountForm;
+import com.jdc.shop.model.dto.page.PaginationPageResultAdapter;
 import com.jdc.shop.model.service.AccountService;
 import com.jdc.shop.utilities.Integers;
 
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class OwnerMemberController extends AbstractController {
 
 	private static final long serialVersionUID = 1L;
+	private static List<Integer> PAGE_SIZES = List.of(10, 15, 25);
 	
 	private AccountService service;
 	
@@ -58,12 +61,24 @@ public class OwnerMemberController extends AbstractController {
 	}
 
 	private void search(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		var currentPage = Integers.parse(req.getParameter("page"));
+		
+		if(currentPage == 0) {
+			currentPage = 1;
+		}
+		
+		var pageSize = Integers.parse(req.getParameter("size"));
+		
+		if(pageSize == 0) {
+			pageSize = PAGE_SIZES.get(0);
+		}
+		req.setAttribute("pageSizes", PAGE_SIZES);
 		
 		var role = req.getParameter("role");
 		var keyword = req.getParameter("keyword");
 		
-		var list = service.search(role, keyword);
-		req.setAttribute("list", list);
+		var result = service.search(role, keyword, currentPage, pageSize);
+		req.setAttribute("model", new PaginationPageResultAdapter<>(result));
 		
 		forward(req, resp, "/members/list");
 	}

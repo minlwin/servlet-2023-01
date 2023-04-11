@@ -42,7 +42,7 @@
 			</div>
 			
 			<div class="col btn-wrapper">
-				<button class="btn btn-outline-primary me-2" type="submit">
+				<button id="adminProductSearchBtn" class="btn btn-outline-primary me-2" type="button">
 					<i class="bi bi-search"></i> Search
 				</button>
 				
@@ -62,7 +62,7 @@
 						<th>Name</th>
 						<th>Category</th>
 						<th>Brand</th>
-						<th>Price</th>
+						<th class="text-end">Price</th>
 						<th>Sold Out</th>
 						<th></th>
 					</tr>
@@ -81,7 +81,7 @@
 							</c:forEach>
 						</td>
 						<td>${item.product.brand}</td>
-						<td>${item.product.price}</td>
+						<td class="text-end">${item.product.price}</td>
 						<td>${item.product.soldOut ? 'Out' : 'In Hand'}</td>
 						<td>
 							<c:url value="/sale/product/details" var="detailsLink">

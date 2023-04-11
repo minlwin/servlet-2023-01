@@ -107,7 +107,6 @@ public class ProductService {
 				result.setTotalCount(countRs.getLong(1));
 				break;
 			}
-
 			
 			for(var i = 0; i < params.size(); i ++) {
 				stmt.setObject(i + 1, params.get(i));

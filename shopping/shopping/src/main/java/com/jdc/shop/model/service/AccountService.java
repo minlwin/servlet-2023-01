@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.jdc.shop.model.dto.form.AccountForm;
+import com.jdc.shop.model.dto.page.PageResult;
 import com.jdc.shop.utilities.BusinessException;
 import com.jdc.shop.utilities.LoginUser;
 import com.jdc.shop.utilities.Strings;
@@ -137,7 +138,7 @@ public class AccountService {
 		
 		return 0;
 	}
-
+	
 	public List<AccountForm> search(String role, String keyword) {
 		
 		List<AccountForm> list = new ArrayList<>();
@@ -175,6 +176,73 @@ public class AccountService {
 		}
 		
 		return list;
+	}	
+
+	public PageResult<AccountForm> search(String role, String keyword, int page, int size) {
+		
+		List<AccountForm> list = new ArrayList<>();
+		var result = new PageResult<AccountForm>();
+		
+		result.setList(list);
+		result.setCurrentPage(page);
+		result.setPageSize(size);
+		
+		var sql = new StringBuffer("select * from account where 1 = 1");
+		var params = new ArrayList<>();
+		
+		var count = new StringBuffer("select count(id) from account where 1 = 1");
+		var countParams = new ArrayList<>();
+
+		if(Strings.isNotBlanck(role)) {
+			sql.append(" and role = ?");
+			params.add(role);
+
+			count.append(" and role = ?");
+			countParams.add(role);
+		}
+		
+		if(Strings.isNotBlanck(keyword)) {
+			sql.append(" and (lower(name) like ? or lower(email) like ? or lower(phone) like ?)");
+			params.add(keyword.toLowerCase().concat("%"));
+			params.add(keyword.toLowerCase().concat("%"));
+			params.add(keyword.toLowerCase().concat("%"));
+
+			count.append(" and (lower(name) like ? or lower(email) like ? or lower(phone) like ?)");
+			countParams.add(keyword.toLowerCase().concat("%"));
+			countParams.add(keyword.toLowerCase().concat("%"));
+			countParams.add(keyword.toLowerCase().concat("%"));
+		}
+
+		try (var conn = dataSource.getConnection(); 
+				var countStmt = conn.prepareStatement(count.toString());
+				var stmt = conn.prepareStatement(sql.toString())) {
+
+			for(var i = 0; i < countParams.size(); i ++) {
+				countStmt.setObject(i + 1, countParams.get(i));
+			}
+			
+			var countRs = countStmt.executeQuery();
+			
+			while(countRs.next()) {
+				result.setTotalCount(countRs.getLong(1));
+				break;
+			}
+			
+			for(var i = 0; i < params.size(); i ++) {
+				stmt.setObject(i + 1, params.get(i));
+			}
+			
+			var rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(getData(rs));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	public void signUp(String name, String loginId, String password) {
